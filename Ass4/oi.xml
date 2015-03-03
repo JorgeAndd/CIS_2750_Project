@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Output by mxutil library Jorge Luiz Andrade #0906139 -->
+<marc:collection xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://www.loc.gov/MARC21/slim
+http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
+	<marc:record>
+		<marc:leader>00970nam a2200241 a 4500</marc:leader>
+		<marc:controlfield tag="008">090608s2005    orua   d      000 c eng d</marc:controlfield>
+		<marc:datafield tag="020" ind1=" " ind2=" ">
+			<marc:subfield code="a">9781932664126</marc:subfield>
+		</marc:datafield>
+		<marc:datafield tag="040" ind1=" " ind2=" ">
+			<marc:subfield code="a">GP4</marc:subfield>
+			<marc:subfield code="c">GP4</marc:subfield>
+			<marc:subfield code="d">NOG</marc:subfield>
+			<marc:subfield code="d">CaOL</marc:subfield>
+		</marc:datafield>
+		<marc:datafield tag="050" ind1=" " ind2=" ">
+			<marc:subfield code="a">YGN_OMA 43509</marc:subfield>
+		</marc:datafield>
+		<marc:datafield tag="100" ind1="1" ind2=" ">
+			<marc:subfield code="a">O&apos;Malley, Bryan Lee.</marc:subfield>
+			<marc:subfield code="9">14036</marc:subfield>
+		</marc:datafield>
+		<marc:datafield tag="245" ind1="1" ind2="0">
+			<marc:subfield code="a">Scott Pilgrim vs. the world /</marc:subfield>
+			<marc:subfield code="c">[Bryan Lee O&apos;Malley].</marc:subfield>
+		</marc:datafield>
+		<marc:datafield tag="246" ind1="3" ind2="3">
+			<marc:subfield code="a">Scott Pilgrim.</marc:subfield>
+			<marc:subfield code="n">Vol. 2.</marc:subfield>
+		</marc:datafield>
+		<marc:datafield tag="260" ind1=" " ind2=" ">
+			<marc:subfield code="a">Portland, Or. :</marc:subfield>
+			<marc:subfield code="b">Oni Press,</marc:subfield>
+			<marc:subfield code="c">c2005.</marc:subfield>
+		</marc:datafield>
+		<marc:datafield tag="300" ind1=" " ind2=" ">
+			<marc:subfield code="a">1 v. (unpaged) :</marc:subfield>
+			<marc:subfield code="b">ill. ;</marc:subfield>
+			<marc:subfield code="c">19 cm.</marc:subfield>
+		</marc:datafield>
+		<marc:datafield tag="500" ind1=" " ind2=" ">
+			<marc:subfield code="a">Statement of responsibility from cover.</marc:subfield>
+		</marc:datafield>
+		<marc:datafield tag="650" ind1=" " ind2="0">
+			<marc:subfield code="a">Pilgrim, Scott (Fictitious character)</marc:subfield>
+			<marc:subfield code="v">Fiction.</marc:subfield>
+			<marc:subfield code="9">14037</marc:subfield>
+		</marc:datafield>
+		<marc:datafield tag="650" ind1=" " ind2="0">
+			<marc:subfield code="a">Teenagers</marc:subfield>
+			<marc:subfield code="v">Fiction.</marc:subfield>
+			<marc:subfield code="9">14038</marc:subfield>
+		</marc:datafield>
+		<marc:datafield tag="650" ind1=" " ind2="0">
+			<marc:subfield code="a">High school students</marc:subfield>
+			<marc:subfield code="v">Fiction.</marc:subfield>
+			<marc:subfield code="9">14039</marc:subfield>
+		</marc:datafield>
+		<marc:datafield tag="650" ind1=" " ind2="1">
+			<marc:subfield code="a">Coming of age</marc:subfield>
+			<marc:subfield code="v">Fiction.</marc:subfield>
+			<marc:subfield code="9">14040</marc:subfield>
+		</marc:datafield>
+		<marc:datafield tag="650" ind1=" " ind2="0">
+			<marc:subfield code="a">Interpersonal relations</marc:subfield>
+			<marc:subfield code="v">Fiction.</marc:subfield>
+			<marc:subfield code="9">14041</marc:subfield>
+		</marc:datafield>
+		<marc:datafield tag="655" ind1=" " ind2="0">
+			<marc:subfield code="a">Graphic novels.</marc:subfield>
+			<marc:subfield code="9">14042</marc:subfield>
+		</marc:datafield>
+		<marc:datafield tag="942" ind1=" " ind2=" ">
+			<marc:subfield code="2">ddc</marc:subfield>
+			<marc:subfield code="c">6</marc:subfield>
+		</marc:datafield>
+		<marc:datafield tag="999" ind1=" " ind2=" ">
+			<marc:subfield code="c">34582</marc:subfield>
+			<marc:subfield code="d">34582</marc:subfield>
+		</marc:datafield>
+		<marc:datafield tag="952" ind1=" " ind2=" ">
+			<marc:subfield code="w">2011-03-01</marc:subfield>
+			<marc:subfield code="p">32107000500194</marc:subfield>
+			<marc:subfield code="r">2011-08-17</marc:subfield>
+			<marc:subfield code="4">0</marc:subfield>
+			<marc:subfield code="e">Donation</marc:subfield>
+			<marc:subfield code="0">0</marc:subfield>
+			<marc:subfield code="6">YGN_OMA 43509</marc:subfield>
+			<marc:subfield code="b">DUR</marc:subfield>
+			<marc:subfield code="1">0</marc:subfield>
+			<marc:subfield code="o">YGN OMA</marc:subfield>
+			<marc:subfield code="d">2011-03-01</marc:subfield>
+			<marc:subfield code="7">0</marc:subfield>
+			<marc:subfield code="c">Shelves</marc:subfield>
+			<marc:subfield code="y">98</marc:subfield>
+			<marc:subfield code="s">2011-08-16</marc:subfield>
+			<marc:subfield code="l">2</marc:subfield>
+			<marc:subfield code="a">DUR</marc:subfield>
+		</marc:datafield>
+	</marc:record>
+	<marc:record>
+		<marc:leader>01107nam a2200277 a 4500</marc:leader>
+		<marc:controlfield tag="008">060918s2006    orua   d      000 c eng d</marc:controlfield>
+		<marc:datafield tag="020" ind1=" " ind2=" ">
+			<marc:subfield code="a">193266422X</marc:subfield>
+		</marc:datafield>
+		<marc:datafield tag="020" ind1=" " ind2=" ">
+			<marc:subfield code="a">9781932664225</marc:subfield>
+		</marc:datafield>
+		<marc:datafield tag="040" ind1=" " ind2=" ">
+			<marc:subfield code="a">CPL</marc:subfield>
+			<marc:subfield code="c">CPL</marc:subfield>
+			<marc:subfield code="d">OSU</marc:subfield>
+			<marc:subfield code="d">CaOL</marc:subfield>
+		</marc:datafield>
+		<marc:datafield tag="050" ind1=" " ind2=" ">
+			<marc:subfield code="a">YGN 43510</marc:subfield>
+		</marc:datafield>
+		<marc:datafield tag="100" ind1="1" ind2=" ">
+			<marc:subfield code="a">O&apos;Malley, Bryan Lee.</marc:subfield>
+			<marc:subfield code="9">14043</marc:subfield>
+		</marc:datafield>
+		<marc:datafield tag="245" ind1="1" ind2="0">
+			<marc:subfield code="a">Scott Pilgrim and the infinite sadness</marc:subfield>
+			<marc:subfield code="c">[Bryan Lee O&apos;Malley].</marc:subfield>
+		</marc:datafield>
+		<marc:datafield tag="246" ind1="3" ind2="3">
+			<marc:subfield code="a">Scott Pilgrim and the infinite sadness.</marc:subfield>
+		</marc:datafield>
+		<marc:datafield tag="246" ind1="3" ind2="3">
+			<marc:subfield code="a">Scott Pilgrim.</marc:subfield>
+			<marc:subfield code="n">Vol. 3.</marc:subfield>
+		</marc:datafield>
+		<marc:datafield tag="260" ind1=" " ind2=" ">
+			<marc:subfield code="a">Portland, OR :</marc:subfield>
+			<marc:subfield code="b">Oni Press,</marc:subfield>
+			<marc:subfield code="c">2006.</marc:subfield>
+		</marc:datafield>
+		<marc:datafield tag="300" ind1=" " ind2=" ">
+			<marc:subfield code="a">[188 p.] :</marc:subfield>
+			<marc:subfield code="b">chiefly ill. ;</marc:subfield>
+			<marc:subfield code="c">19 cm.</marc:subfield>
+		</marc:datafield>
+		<marc:datafield tag="500" ind1=" " ind2=" ">
+			<marc:subfield code="a">Statement of responsibility from cover.</marc:subfield>
+		</marc:datafield>
+		<marc:datafield tag="650" ind1=" " ind2="0">
+			<marc:subfield code="a">Pilgrim, Scott (Fictitious character)</marc:subfield>
+			<marc:subfield code="v">Fiction.</marc:subfield>
+			<marc:subfield code="9">14044</marc:subfield>
+		</marc:datafield>
+		<marc:datafield tag="650" ind1=" " ind2="0">
+			<marc:subfield code="a">Teenagers</marc:subfield>
+			<marc:subfield code="v">Fiction.</marc:subfield>
+			<marc:subfield code="9">14045</marc:subfield>
+		</marc:datafield>
+		<marc:datafield tag="650" ind1=" " ind2="0">
+			<marc:subfield code="a">High school students</marc:subfield>
+			<marc:subfield code="v">Fiction.</marc:subfield>
+			<marc:subfield code="9">14046</marc:subfield>
+		</marc:datafield>
+		<marc:datafield tag="650" ind1=" " ind2="1">
+			<marc:subfield code="a">Coming of age</marc:subfield>
+			<marc:subfield code="v">Fiction.</marc:subfield>
+			<marc:subfield code="9">14047</marc:subfield>
+		</marc:datafield>
+		<marc:datafield tag="650" ind1=" " ind2="0">
+			<marc:subfield code="a">Interpersonal relations</marc:subfield>
+			<marc:subfield code="v">Fiction.</marc:subfield>
+			<marc:subfield code="9">14048</marc:subfield>
+		</marc:datafield>
+		<marc:datafield tag="655" ind1=" " ind2="7">
+			<marc:subfield code="a">Love stories.</marc:subfield>
+			<marc:subfield code="2">gsafd.</marc:subfield>
+			<marc:subfield code="9">14049</marc:subfield>
+		</marc:datafield>
+		<marc:datafield tag="655" ind1=" " ind2="0">
+			<marc:subfield code="a">Graphic novels.</marc:subfield>
+			<marc:subfield code="9">14050</marc:subfield>
+		</marc:datafield>
+		<marc:datafield tag="942" ind1=" " ind2=" ">
+			<marc:subfield code="2">ddc</marc:subfield>
+			<marc:subfield code="c">6</marc:subfield>
+		</marc:datafield>
+		<marc:datafield tag="999" ind1=" " ind2=" ">
+			<marc:subfield code="c">34583</marc:subfield>
+			<marc:subfield code="d">34583</marc:subfield>
+		</marc:datafield>
+		<marc:datafield tag="952" ind1=" " ind2=" ">
+			<marc:subfield code="w">2011-03-01</marc:subfield>
+			<marc:subfield code="p">32107000500202</marc:subfield>
+			<marc:subfield code="r">2011-08-24</marc:subfield>
+			<marc:subfield code="4">0</marc:subfield>
+			<marc:subfield code="e">Donation</marc:subfield>
+			<marc:subfield code="0">0</marc:subfield>
+			<marc:subfield code="6">YGN_OMA 43510</marc:subfield>
+			<marc:subfield code="b">DUR</marc:subfield>
+			<marc:subfield code="1">0</marc:subfield>
+			<marc:subfield code="o">YGN OMA</marc:subfield>
+			<marc:subfield code="d">2011-03-01</marc:subfield>
+			<marc:subfield code="7">0</marc:subfield>
+			<marc:subfield code="c">Shelves</marc:subfield>
+			<marc:subfield code="y">98</marc:subfield>
+			<marc:subfield code="s">2011-08-17</marc:subfield>
+			<marc:subfield code="l">2</marc:subfield>
+			<marc:subfield code="a">DUR</marc:subfield>
+		</marc:datafield>
+	</marc:record>
+</marc:collection>

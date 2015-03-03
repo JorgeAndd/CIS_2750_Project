@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<marc:collection xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim
+http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
+  <marc:record>
+    <marc:leader>00925njm  22002777a 4500</marc:leader>
+    <marc:controlfield tag="001">4157077</marc:controlfield>
+    <marc:controlfield tag="005">20101115185851.0</marc:controlfield>
+    <marc:controlfield tag="006">m        d        </marc:controlfield>
+    <marc:controlfield tag="007">cr cn ---|||||</marc:controlfield>
+    <marc:controlfield tag="008">070329s2007    maua    sb    001 0 eng d</marc:controlfield>
+    <marc:datafield tag="020" ind1=" " ind2=" ">
+      <marc:subfield code="a">9780750682923 (pbk.)</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="020" ind1=" " ind2=" ">
+      <marc:subfield code="a">0750682922 (pbk.)</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="040" ind1=" " ind2=" ">
+      <marc:subfield code="a">CaPaEBR</marc:subfield>
+      <marc:subfield code="c">CaPaEBR</marc:subfield>
+      <marc:subfield code="d">CaOWtU</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="050" ind1="1" ind2="4">
+      <marc:subfield code="a">dddd</marc:subfield>
+      <marc:subfield code="b">D5 2007</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="100" ind1="1" ind2=" ">
+      <marc:subfield code="a">Di Jasio, Lucio.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="245" ind1="1" ind2="0">
+      <marc:subfield code="a">Programming 16-bit PIC microcontrollers in C</marc:subfield>
+      <marc:subfield code="h">[electronic resource] :</marc:subfield>
+      <marc:subfield code="b">learning to fly the PIC24 /</marc:subfield>
+      <marc:subfield code="c">by Lucio Di Jasio.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="260" ind1=" " ind2=" ">
+      <marc:subfield code="a">Boston :</marc:subfield>
+      <marc:subfield code="b">Newnes,</marc:subfield>
+      <marc:subfield code="c">c2007.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="300" ind1=" " ind2=" ">
+      <marc:subfield code="a">xix, 379 p. :</marc:subfield>
+      <marc:subfield code="b">ill.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="490" ind1="1" ind2=" ">
+      <marc:subfield code="a">Embedded technology series</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="504" ind1=" " ind2=" ">
+      <marc:subfield code="a">Includes bibliographical references and index.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="538" ind1=" " ind2=" ">
+      <marc:subfield code="a">Mode of access: World Wide Web.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="650" ind1=" " ind2="0">
+      <marc:subfield code="a">Programmable controllers.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="650" ind1=" " ind2="0">
+      <marc:subfield code="a">C (Computer program language)</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="830" ind1=" " ind2="0">
+      <marc:subfield code="a">Embedded technology series</marc:subfield>
+    </marc:datafield>
+  </marc:record>
+  <marc:record>
+    <marc:leader>00925njm  22002777a 4500</marc:leader>
+    <marc:controlfield tag="001">404744</marc:controlfield>
+    <marc:controlfield tag="005">20000127170425.0</marc:controlfield>
+    <marc:controlfield tag="007">ta</marc:controlfield>
+    <marc:controlfield tag="008">030298s19uu    xx                  eng  </marc:controlfield>
+    <marc:datafield tag="035" ind1=" " ind2=" ">
+      <marc:subfield code="9">CaOWtU00217172</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="090" ind1=" " ind2=" ">
+      <marc:subfield code="a">aaaaa</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="100" ind1=" " ind2=" ">
+      <marc:subfield code="a">Malcolme-Lawes, David J</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="245" ind1="1" ind2="0">
+      <marc:subfield code="a">Programming - Algol, by D. J. Malcolme-Lawes</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="250" ind1=" " ind2=" ">
+      <marc:subfield code="a">[1st ed.]</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="260" ind1=" " ind2=" ">
+      <marc:subfield code="a">Oxford, Pergamon Press [1969]</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="300" ind1=" " ind2=" ">
+      <marc:subfield code="a">110 p.  21 cm.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="504" ind1=" " ind2=" ">
+      <marc:subfield code="a">Includes bibliography.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="650" ind1=" " ind2="0">
+      <marc:subfield code="a">ALGOL (Computer program language)</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="650" ind1=" " ind2="0">
+      <marc:subfield code="a">Computer programming.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="901" ind1=" " ind2=" ">
+      <marc:subfield code="a">00217172</marc:subfield>
+    </marc:datafield>
+  </marc:record>
+  <marc:record>
+    <marc:leader>00925njm  22002777a 4500</marc:leader>
+    <marc:controlfield tag="001">3950429</marc:controlfield>
+    <marc:controlfield tag="005">20081103121313.0</marc:controlfield>
+    <marc:controlfield tag="007">ta</marc:controlfield>
+    <marc:controlfield tag="008">080816s2008    enka          000 0 eng  </marc:controlfield>
+    <marc:datafield tag="015" ind1=" " ind2=" ">
+      <marc:subfield code="a">GBA797342</marc:subfield>
+      <marc:subfield code="2">bnb</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="016" ind1="7" ind2=" ">
+      <marc:subfield code="a">014458446</marc:subfield>
+      <marc:subfield code="2">Uk</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="020" ind1=" " ind2=" ">
+      <marc:subfield code="a">9780596515812 (pbk.)</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="020" ind1=" " ind2=" ">
+      <marc:subfield code="a">0596515812 (pbk.)</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="040" ind1=" " ind2=" ">
+      <marc:subfield code="a">UKM</marc:subfield>
+      <marc:subfield code="c">UKM</marc:subfield>
+      <marc:subfield code="d">BAKER</marc:subfield>
+      <marc:subfield code="d">YDXCP</marc:subfield>
+      <marc:subfield code="d">BTCTA</marc:subfield>
+      <marc:subfield code="d">TXA</marc:subfield>
+      <marc:subfield code="d">BWX</marc:subfield>
+      <marc:subfield code="d">U3G</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="050" ind1=" " ind2="4">
+      <marc:subfield code="a">ccccc</marc:subfield>
+      <marc:subfield code="b">.M88 2008</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="090" ind1=" " ind2=" ">
+      <marc:subfield code="a">ccccc</marc:subfield>
+      <marc:subfield code="b">.M88 2008</marc:subfield>
+      <marc:subfield code="5">CaOGU</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="100" ind1="1" ind2=" ">
+      <marc:subfield code="a">Murty, James.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="245" ind1="1" ind2="0">
+      <marc:subfield code="a">Programming Amazon Web Services - S3, EC2, SQS, and FPS /</marc:subfield>
+      <marc:subfield code="c">James Murty.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="260" ind1=" " ind2=" ">
+      <marc:subfield code="a">Farnham :</marc:subfield>
+      <marc:subfield code="b">O'Reilly,</marc:subfield>
+      <marc:subfield code="c">2008.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="300" ind1=" " ind2=" ">
+      <marc:subfield code="a">xvi, 581 p. :</marc:subfield>
+      <marc:subfield code="b">ill. ;</marc:subfield>
+      <marc:subfield code="c">24 cm.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="500" ind1=" " ind2=" ">
+      <marc:subfield code="a">Includes index</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="650" ind1=" " ind2="0">
+      <marc:subfield code="a">Internet programming.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="650" ind1=" " ind2="0">
+      <marc:subfield code="a">Web services.</marc:subfield>
+    </marc:datafield>
+  </marc:record>
+  <marc:record>
+    <marc:leader>00925njm  22002777a 4500</marc:leader>
+    <marc:controlfield tag="001">1239586</marc:controlfield>
+    <marc:controlfield tag="005">20061122150459.0</marc:controlfield>
+    <marc:controlfield tag="007">ta</marc:controlfield>
+    <marc:controlfield tag="008">940804s1994    enka     r    000 0 eng d</marc:controlfield>
+    <marc:datafield tag="020" ind1=" " ind2=" ">
+      <marc:subfield code="a">0863421709 (pbk.)</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="035" ind1=" " ind2=" ">
+      <marc:subfield code="9">CaOWtU01402187</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="039" ind1=" " ind2=" ">
+      <marc:subfield code="a">235249869</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="040" ind1=" " ind2=" ">
+      <marc:subfield code="a">HLS</marc:subfield>
+      <marc:subfield code="b">eng</marc:subfield>
+      <marc:subfield code="c">HLS</marc:subfield>
+      <marc:subfield code="d">UWW</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="050" ind1=" " ind2="4">
+      <marc:subfield code="a">bbbb</marc:subfield>
+      <marc:subfield code="b">.O84x no. 150</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="090" ind1=" " ind2=" ">
+      <marc:subfield code="a">bbbbb</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="100" ind1="1" ind2=" ">
+      <marc:subfield code="a">Rodriguez-Bachiller, Agustin,</marc:subfield>
+      <marc:subfield code="d">1942-</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="245" ind1="1" ind2="0">
+      <marc:subfield code="a">Programming an ARC-INFO G.I.S. for plan-making with an Arc-Info mini-manual and a listing of the AML program /</marc:subfield>
+      <marc:subfield code="c">Agustin Rodriguez-Bachiller.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="260" ind1=" " ind2=" ">
+      <marc:subfield code="a">Oxford :</marc:subfield>
+      <marc:subfield code="b">Oxford Brookes University, School of Planning,</marc:subfield>
+      <marc:subfield code="c">1994.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="300" ind1=" " ind2=" ">
+      <marc:subfield code="a">102 p. :</marc:subfield>
+      <marc:subfield code="b">ill. ;</marc:subfield>
+      <marc:subfield code="c">30 cm.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="490" ind1="1" ind2=" ">
+      <marc:subfield code="a">Working paper ;</marc:subfield>
+      <marc:subfield code="v">no. 150</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="500" ind1=" " ind2=" ">
+      <marc:subfield code="a">"June 1994."</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="504" ind1=" " ind2=" ">
+      <marc:subfield code="a">Includes bibliographical references (p. 19-22)</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="630" ind1="0" ind2="0">
+      <marc:subfield code="a">ARC/INFO (Computer program)</marc:subfield>
+      <marc:subfield code="x">Handbooks, manuals, etc.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="650" ind1=" " ind2="0">
+      <marc:subfield code="a">Geographic information systems.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="830" ind1=" " ind2="0">
+      <marc:subfield code="a">Working paper (Oxford Brookes University. School of Planning) ;</marc:subfield>
+      <marc:subfield code="v">no. 150.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="901" ind1=" " ind2=" ">
+      <marc:subfield code="a">01402187</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="997" ind1=" " ind2=" ">
+      <marc:subfield code="a">960704</marc:subfield>
+      <marc:subfield code="b">RK</marc:subfield>
+      <marc:subfield code="d">00000001500400</marc:subfield>
+    </marc:datafield>
+  </marc:record>
+</marc:collection>

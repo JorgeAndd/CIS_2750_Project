@@ -1,0 +1,544 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<collection
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/ standards/marcxml/schema/MARC21slim.xsd"
+    xmlns="http://www.loc.gov/MARC21/slim">
+  <record>
+    <leader>00996nam a2200253 a 4500</leader>
+    <controlfield tag="008">090603s2007    oru    d      000 1 eng d</controlfield>
+    <datafield tag="020" ind1=" " ind2=" ">
+      <subfield code="a">9781932664492 (pbk.)</subfield>
+    </datafield>
+    <datafield tag="020" ind1=" " ind2=" ">
+      <subfield code="a">1932664491 (pbk.)</subfield>
+    </datafield>
+    <datafield tag="040" ind1=" " ind2=" ">
+      <subfield code="a">UKM</subfield>
+      <subfield code="c">UKM</subfield>
+      <subfield code="d">BTCTA</subfield>
+      <subfield code="d">BAKER</subfield>
+      <subfield code="d">DPL</subfield>
+      <subfield code="d">CaOL</subfield>
+      <subfield code="b">eng</subfield>
+    </datafield>
+    <datafield tag="050" ind1=" " ind2=" ">
+      <subfield code="a">YGN_OMA 43511</subfield>
+    </datafield>
+    <datafield tag="100" ind1="1" ind2=" ">
+      <subfield code="a">O'Malley, Bryan Lee.</subfield>
+      <subfield code="9">14051</subfield>
+    </datafield>
+    <datafield tag="245" ind1="1" ind2="0">
+      <subfield code="a">Scott Pilgrim gets it together</subfield>
+      <subfield code="c">[Bryan Lee O'Malley].</subfield>
+    </datafield>
+    <datafield tag="246" ind1="3" ind2="0">
+      <subfield code="a">Gets it together.</subfield>
+    </datafield>
+    <datafield tag="246" ind1="3" ind2="3">
+      <subfield code="a">Scott Pilgrim.</subfield>
+      <subfield code="n">Vol. 4.</subfield>
+    </datafield>
+    <datafield tag="260" ind1=" " ind2=" ">
+      <subfield code="a">Portland, Or. :</subfield>
+      <subfield code="b">Oni ;</subfield>
+      <subfield code="c">2007.</subfield>
+    </datafield>
+    <datafield tag="300" ind1=" " ind2=" ">
+      <subfield code="a">205 p. :</subfield>
+      <subfield code="b">chiefly ill. ;</subfield>
+      <subfield code="c">19 cm.</subfield>
+    </datafield>
+    <datafield tag="650" ind1=" " ind2="0">
+      <subfield code="a">Pilgrim, Scott (Fictitious character)</subfield>
+      <subfield code="v">Fiction.</subfield>
+      <subfield code="9">14052</subfield>
+    </datafield>
+    <datafield tag="650" ind1=" " ind2="0">
+      <subfield code="a">Teenagers</subfield>
+      <subfield code="v">Fiction.</subfield>
+      <subfield code="9">14053</subfield>
+    </datafield>
+    <datafield tag="650" ind1=" " ind2="1">
+      <subfield code="a">Coming of age</subfield>
+      <subfield code="v">Fiction.</subfield>
+      <subfield code="9">14054</subfield>
+    </datafield>
+    <datafield tag="650" ind1=" " ind2="0">
+      <subfield code="a">Interpersonal relations</subfield>
+      <subfield code="v">Fiction.</subfield>
+      <subfield code="9">14055</subfield>
+    </datafield>
+    <datafield tag="655" ind1=" " ind2="7">
+      <subfield code="a">Love stories.</subfield>
+      <subfield code="2">gsafd.</subfield>
+      <subfield code="9">14056</subfield>
+    </datafield>
+    <datafield tag="655" ind1=" " ind2="0">
+      <subfield code="a">Graphic novels.</subfield>
+      <subfield code="9">14057</subfield>
+    </datafield>
+    <datafield tag="942" ind1=" " ind2=" ">
+      <subfield code="2">ddc</subfield>
+      <subfield code="c">6</subfield>
+    </datafield>
+    <datafield tag="999" ind1=" " ind2=" ">
+      <subfield code="c">34584</subfield>
+      <subfield code="d">34584</subfield>
+    </datafield>
+    <datafield tag="952" ind1=" " ind2=" ">
+      <subfield code="w">2011-03-01</subfield>
+      <subfield code="p">32107000500210</subfield>
+      <subfield code="r">2011-08-24</subfield>
+      <subfield code="4">0</subfield>
+      <subfield code="e">Donation</subfield>
+      <subfield code="0">0</subfield>
+      <subfield code="6">YGN_OMA 43511</subfield>
+      <subfield code="b">DUR</subfield>
+      <subfield code="1">0</subfield>
+      <subfield code="o">YGN OMA</subfield>
+      <subfield code="d">2011-03-01</subfield>
+      <subfield code="7">0</subfield>
+      <subfield code="c">Shelves</subfield>
+      <subfield code="y">98</subfield>
+      <subfield code="s">2011-08-17</subfield>
+      <subfield code="l">2</subfield>
+      <subfield code="a">DUR</subfield>
+    </datafield>
+  </record>
+  <record>
+    <leader>00818cam a2200205Ia 4500</leader>
+    <controlfield tag="008">090603s2009    oru    d      000 1 eng d</controlfield>
+    <datafield tag="020" ind1=" " ind2=" ">
+      <subfield code="a">9781934964101 (pbk.)</subfield>
+    </datafield>
+    <datafield tag="040" ind1=" " ind2=" ">
+      <subfield code="a">BTCTA</subfield>
+      <subfield code="c">BTCTA</subfield>
+      <subfield code="d">YDXCP</subfield>
+      <subfield code="d">VA@</subfield>
+      <subfield code="d">NDD</subfield>
+      <subfield code="d">JRG</subfield>
+      <subfield code="d">CaOL</subfield>
+      <subfield code="b">eng</subfield>
+    </datafield>
+    <datafield tag="050" ind1=" " ind2=" ">
+      <subfield code="a">YGN_OMA 43512</subfield>
+    </datafield>
+    <datafield tag="100" ind1="1" ind2=" ">
+      <subfield code="a">O'Malley, Bryan Lee.</subfield>
+      <subfield code="9">14058</subfield>
+    </datafield>
+    <datafield tag="245" ind1="1" ind2="0">
+      <subfield code="a">Scott Pilgrim vs the universe /</subfield>
+      <subfield code="c">[Bryan Lee O'Malley]</subfield>
+    </datafield>
+    <datafield tag="246" ind1="3" ind2="3">
+      <subfield code="a">Scott Pilgrim versus the universe.</subfield>
+    </datafield>
+    <datafield tag="246" ind1="3" ind2="3">
+      <subfield code="a">Scott Pilgrim.</subfield>
+      <subfield code="n">Vol. 5.</subfield>
+    </datafield>
+    <datafield tag="260" ind1=" " ind2=" ">
+      <subfield code="a">Portland, Or. :</subfield>
+      <subfield code="b">Oni Press,</subfield>
+      <subfield code="c">2009.</subfield>
+    </datafield>
+    <datafield tag="300" ind1=" " ind2=" ">
+      <subfield code="a">178 p. :</subfield>
+      <subfield code="b">chiefly ill. ;</subfield>
+      <subfield code="c">19 cm.</subfield>
+    </datafield>
+    <datafield tag="650" ind1=" " ind2="1">
+      <subfield code="a">Coming of age</subfield>
+      <subfield code="v">Fiction.</subfield>
+      <subfield code="9">14059</subfield>
+    </datafield>
+    <datafield tag="655" ind1=" " ind2="7">
+      <subfield code="a">Love stories.</subfield>
+      <subfield code="2">gsafd.</subfield>
+      <subfield code="9">14060</subfield>
+    </datafield>
+    <datafield tag="655" ind1=" " ind2="0">
+      <subfield code="a">Graphic novels.</subfield>
+      <subfield code="9">14061</subfield>
+    </datafield>
+    <datafield tag="942" ind1=" " ind2=" ">
+      <subfield code="2">ddc</subfield>
+      <subfield code="c">6</subfield>
+    </datafield>
+    <datafield tag="999" ind1=" " ind2=" ">
+      <subfield code="c">34585</subfield>
+      <subfield code="d">34585</subfield>
+    </datafield>
+    <datafield tag="952" ind1=" " ind2=" ">
+      <subfield code="w">2011-03-01</subfield>
+      <subfield code="p">32107000500228</subfield>
+      <subfield code="r">2011-08-24</subfield>
+      <subfield code="4">0</subfield>
+      <subfield code="e">Donation</subfield>
+      <subfield code="0">0</subfield>
+      <subfield code="6">YGN_OMA 43512</subfield>
+      <subfield code="b">DUR</subfield>
+      <subfield code="1">0</subfield>
+      <subfield code="o">YGN OMA</subfield>
+      <subfield code="d">2011-03-01</subfield>
+      <subfield code="7">0</subfield>
+      <subfield code="c">Shelves</subfield>
+      <subfield code="y">98</subfield>
+      <subfield code="s">2011-08-23</subfield>
+      <subfield code="l">2</subfield>
+      <subfield code="a">DUR</subfield>
+    </datafield>
+  </record>
+  <record>
+    <leader>00889 am a2200229Ia 4500</leader>
+    <controlfield tag="008">101110s2010    orua   d      000 1 eng d</controlfield>
+    <datafield tag="020" ind1=" " ind2=" ">
+      <subfield code="a">9781934964385</subfield>
+    </datafield>
+    <datafield tag="040" ind1=" " ind2=" ">
+      <subfield code="a">BTCTA</subfield>
+      <subfield code="b">eng</subfield>
+      <subfield code="c">BTCTA</subfield>
+      <subfield code="d">GK8</subfield>
+      <subfield code="d">WIQ</subfield>
+      <subfield code="d">CXP</subfield>
+      <subfield code="d">CDX</subfield>
+      <subfield code="d">YDXCP</subfield>
+      <subfield code="d">CaOL</subfield>
+    </datafield>
+    <datafield tag="050" ind1=" " ind2=" ">
+      <subfield code="a">YGN 43513</subfield>
+    </datafield>
+    <datafield tag="100" ind1="1" ind2=" ">
+      <subfield code="a">O'Malley, Bryan Lee.</subfield>
+      <subfield code="9">14062</subfield>
+    </datafield>
+    <datafield tag="245" ind1="1" ind2="0">
+      <subfield code="a">Scott Pilgrim in his finest hour /</subfield>
+      <subfield code="c">[Bryan Lee O'Malley].</subfield>
+    </datafield>
+    <datafield tag="246" ind1="1" ind2="4">
+      <subfield code="a">Scott Pilgrim's finest hour.</subfield>
+    </datafield>
+    <datafield tag="246" ind1="3" ind2="3">
+      <subfield code="a">Scott Pilgrim.</subfield>
+      <subfield code="n">Vol. 6.</subfield>
+    </datafield>
+    <datafield tag="250" ind1=" " ind2=" ">
+      <subfield code="a">1st ed.</subfield>
+    </datafield>
+    <datafield tag="260" ind1=" " ind2=" ">
+      <subfield code="a">Portland, OR :</subfield>
+      <subfield code="b">Oni Press,</subfield>
+      <subfield code="c">2010.</subfield>
+    </datafield>
+    <datafield tag="300" ind1=" " ind2=" ">
+      <subfield code="a">234 p. :</subfield>
+      <subfield code="b">chiefly ill. ;</subfield>
+      <subfield code="c">19 cm.</subfield>
+    </datafield>
+    <datafield tag="650" ind1=" " ind2="0">
+      <subfield code="a">Rock groups</subfield>
+      <subfield code="v">Fiction.</subfield>
+      <subfield code="9">14063</subfield>
+    </datafield>
+    <datafield tag="651" ind1=" " ind2="0">
+      <subfield code="a">Toronto (Ont.)</subfield>
+      <subfield code="v">Fiction.</subfield>
+      <subfield code="9">14064</subfield>
+    </datafield>
+    <datafield tag="655" ind1=" " ind2="7">
+      <subfield code="a">Graphic books</subfield>
+      <subfield code="2">LPL.</subfield>
+      <subfield code="9">14065</subfield>
+    </datafield>
+    <datafield tag="655" ind1=" " ind2="7">
+      <subfield code="a">Science fiction</subfield>
+      <subfield code="2">gsafd.</subfield>
+      <subfield code="9">14066</subfield>
+    </datafield>
+    <datafield tag="942" ind1=" " ind2=" ">
+      <subfield code="2">ddc</subfield>
+      <subfield code="c">6</subfield>
+    </datafield>
+    <datafield tag="999" ind1=" " ind2=" ">
+      <subfield code="c">34586</subfield>
+      <subfield code="d">34586</subfield>
+    </datafield>
+    <datafield tag="952" ind1=" " ind2=" ">
+      <subfield code="w">2011-03-01</subfield>
+      <subfield code="p">32107000500236</subfield>
+      <subfield code="r">2011-10-19</subfield>
+      <subfield code="4">0</subfield>
+      <subfield code="e">Donation</subfield>
+      <subfield code="0">0</subfield>
+      <subfield code="6">YGN_OMA 43513</subfield>
+      <subfield code="b">DUR</subfield>
+      <subfield code="1">0</subfield>
+      <subfield code="o">YGN OMA</subfield>
+      <subfield code="d">2011-03-01</subfield>
+      <subfield code="7">0</subfield>
+      <subfield code="c">Shelves</subfield>
+      <subfield code="y">98</subfield>
+      <subfield code="s">2011-07-07</subfield>
+      <subfield code="l">1</subfield>
+      <subfield code="a">DUR</subfield>
+    </datafield>
+  </record>
+  <record>
+    <leader>01308cam a2200337 a 4500</leader>
+    <controlfield tag="001">28113</controlfield>
+    <controlfield tag="005">20071204163041.0</controlfield>
+    <controlfield tag="007">ta</controlfield>
+    <controlfield tag="008">011219s1994    nyua          000 1 eng  </controlfield>
+    <datafield tag="010" ind1=" " ind2=" ">
+      <subfield code="a">93086736</subfield>
+    </datafield>
+    <datafield tag="020" ind1=" " ind2=" ">
+      <subfield code="a">0895775824</subfield>
+    </datafield>
+    <datafield tag="040" ind1=" " ind2=" ">
+      <subfield code="a">(BRO)</subfield>
+    </datafield>
+    <datafield tag="050" ind1="0" ind2="0">
+      <subfield code="a">PR 4034</subfield>
+      <subfield code="b">.E5 1994</subfield>
+    </datafield>
+    <datafield tag="082" ind1="0" ind2="0">
+      <subfield code="a">823/.7</subfield>
+      <subfield code="2">20</subfield>
+    </datafield>
+    <datafield tag="100" ind1="1" ind2=" ">
+      <subfield code="a">Austen, Jane.</subfield>
+    </datafield>
+    <datafield tag="245" ind1="1" ind2="0">
+      <subfield code="a">Emma [classic]</subfield>
+      <subfield code="c">Jane Austen ; illustrations by C.E. Brock and Joan Hassall ; afterword by Carroll Moulton.</subfield>
+    </datafield>
+    <datafield tag="250" ind1=" " ind2=" ">
+      <subfield code="a">Reader's Digest ed.</subfield>
+    </datafield>
+    <datafield tag="260" ind1=" " ind2=" ">
+      <subfield code="a">Pleasantville, N.Y. :</subfield>
+      <subfield code="b">Reader's Digest Assoc.,</subfield>
+      <subfield code="c">c1994.</subfield>
+    </datafield>
+    <datafield tag="300" ind1=" " ind2=" ">
+      <subfield code="a">391 p. :</subfield>
+      <subfield code="b">col. ill. ;</subfield>
+      <subfield code="c">24 cm.</subfield>
+    </datafield>
+    <datafield tag="490" ind1="0" ind2=" ">
+      <subfield code="a">World's best reading.</subfield>
+    </datafield>
+    <datafield tag="520" ind1=" " ind2=" ">
+      <subfield code="a">Located in classic section.</subfield>
+    </datafield>
+    <datafield tag="650" ind1=" " ind2="0">
+      <subfield code="a">Young women</subfield>
+      <subfield code="z">England</subfield>
+      <subfield code="x">Fiction.</subfield>
+    </datafield>
+    <datafield tag="651" ind1=" " ind2="0">
+      <subfield code="a">England</subfield>
+      <subfield code="x">Social life and customs</subfield>
+      <subfield code="y">19th century</subfield>
+      <subfield code="x">Fiction.</subfield>
+    </datafield>
+    <datafield tag="700" ind1="1" ind2="0">
+      <subfield code="a">Parrish, Stephen Maxfield.</subfield>
+    </datafield>
+    <datafield tag="852" ind1=" " ind2=" ">
+      <subfield code="c">DURHAM</subfield>
+      <subfield code="h">Fic</subfield>
+      <subfield code="i">Auste</subfield>
+      <subfield code="p">28113</subfield>
+      <subfield code="a">    </subfield>
+    </datafield>
+    <datafield tag="852" ind1=" " ind2=" ">
+      <subfield code="h">FIC Auste</subfield>
+      <subfield code="p">201162</subfield>
+      <subfield code="a">    </subfield>
+      <subfield code="c">Neustadt</subfield>
+    </datafield>
+    <datafield tag="961" ind1="w" ind2="l">
+      <subfield code="t">2</subfield>
+    </datafield>
+    <datafield tag="961" ind1="w" ind2="l">
+      <subfield code="t">202</subfield>
+    </datafield>
+    <datafield tag="952" ind1=" " ind2=" ">
+      <subfield code="w">2009-10-26</subfield>
+      <subfield code="p">32107000281134</subfield>
+      <subfield code="v">0.00</subfield>
+      <subfield code="r">2011-12-30</subfield>
+      <subfield code="4">0</subfield>
+      <subfield code="0">0</subfield>
+      <subfield code="6">FIC_AUSTE</subfield>
+      <subfield code="9">9405</subfield>
+      <subfield code="b">DUR</subfield>
+      <subfield code="1">0</subfield>
+      <subfield code="o">Fic Auste</subfield>
+      <subfield code="d">2001-12-19</subfield>
+      <subfield code="7">0</subfield>
+      <subfield code="c">Shelves</subfield>
+      <subfield code="y">2</subfield>
+      <subfield code="s">2011-12-14</subfield>
+      <subfield code="l">28</subfield>
+      <subfield code="a">DUR</subfield>
+    </datafield>
+    <datafield tag="952" ind1=" " ind2=" ">
+      <subfield code="w">2009-10-26</subfield>
+      <subfield code="p">35830002011624</subfield>
+      <subfield code="v">0.00</subfield>
+      <subfield code="r">2011-04-14</subfield>
+      <subfield code="4">0</subfield>
+      <subfield code="0">0</subfield>
+      <subfield code="6">FIC_AUSTE</subfield>
+      <subfield code="9">9406</subfield>
+      <subfield code="b">NEU</subfield>
+      <subfield code="m">2</subfield>
+      <subfield code="1">0</subfield>
+      <subfield code="o">FIC Auste</subfield>
+      <subfield code="d">2004-06-05</subfield>
+      <subfield code="q">2011-08-10</subfield>
+      <subfield code="7">0</subfield>
+      <subfield code="c">Shelves</subfield>
+      <subfield code="y">202</subfield>
+      <subfield code="s">2011-04-14</subfield>
+      <subfield code="l">3</subfield>
+      <subfield code="a">NEU</subfield>
+    </datafield>
+    <datafield tag="999" ind1=" " ind2=" ">
+      <subfield code="c">8563</subfield>
+      <subfield code="d">8563</subfield>
+    </datafield>
+  </record>
+  <record>
+    <leader>00610cam a2200181u  4500</leader>
+    <controlfield tag="005">20071201193550.0</controlfield>
+    <controlfield tag="007">ta</controlfield>
+    <controlfield tag="008">030521|||||||||||||||||||||||||||||eng|u</controlfield>
+    <datafield tag="020" ind1=" " ind2=" ">
+      <subfield code="a">019282761</subfield>
+    </datafield>
+    <datafield tag="050" ind1="0" ind2="0">
+      <subfield code="a">PR 4090</subfield>
+      <subfield code="b">.E5 1980</subfield>
+    </datafield>
+    <datafield tag="100" ind1="1" ind2=" ">
+      <subfield code="a">Austen, Jane.</subfield>
+    </datafield>
+    <datafield tag="245" ind1="1" ind2="0">
+      <subfield code="a">Sense and Sensibility [classics]</subfield>
+    </datafield>
+    <datafield tag="260" ind1=" " ind2=" ">
+      <subfield code="a">New York, NY</subfield>
+      <subfield code="b">Oxford University Press</subfield>
+      <subfield code="c">1980</subfield>
+    </datafield>
+    <datafield tag="300" ind1=" " ind2=" ">
+      <subfield code="a">343p</subfield>
+    </datafield>
+    <datafield tag="520" ind1=" " ind2=" ">
+      <subfield code="a">classic section</subfield>
+    </datafield>
+    <datafield tag="852" ind1=" " ind2=" ">
+      <subfield code="p">35525</subfield>
+      <subfield code="h">PB FIC AUSTE</subfield>
+      <subfield code="c">Durham</subfield>
+      <subfield code="a">    </subfield>
+    </datafield>
+    <datafield tag="961" ind1="w" ind2="l">
+      <subfield code="t">76</subfield>
+    </datafield>
+    <datafield tag="952" ind1=" " ind2=" ">
+      <subfield code="w">2009-10-26</subfield>
+      <subfield code="p">32107000355250</subfield>
+      <subfield code="v">0.00</subfield>
+      <subfield code="r">2012-02-14</subfield>
+      <subfield code="4">0</subfield>
+      <subfield code="0">0</subfield>
+      <subfield code="6">PB_FIC_AUSTE</subfield>
+      <subfield code="9">19385</subfield>
+      <subfield code="b">DUR</subfield>
+      <subfield code="1">0</subfield>
+      <subfield code="o">PB FIC AUSTE</subfield>
+      <subfield code="d">2003-05-21</subfield>
+      <subfield code="q">2012-03-06</subfield>
+      <subfield code="7">0</subfield>
+      <subfield code="c">Shelves</subfield>
+      <subfield code="y">76</subfield>
+      <subfield code="s">2012-02-14</subfield>
+      <subfield code="l">17</subfield>
+      <subfield code="a">DUR</subfield>
+    </datafield>
+    <datafield tag="999" ind1=" " ind2=" ">
+      <subfield code="c">16587</subfield>
+      <subfield code="d">16587</subfield>
+    </datafield>
+  </record>
+  <record>
+    <leader>00541nam a2200169u  4500</leader>
+    <controlfield tag="005">20080916152609.0</controlfield>
+    <controlfield tag="007">ta</controlfield>
+    <controlfield tag="008">080916|||||||||||||||||||||||||||||eng|u</controlfield>
+    <datafield tag="020" ind1=" " ind2=" ">
+      <subfield code="a">0439101352</subfield>
+    </datafield>
+    <datafield tag="050" ind1=" " ind2=" ">
+      <subfield code="a">YA 36849</subfield>
+    </datafield>
+    <datafield tag="100" ind1="1" ind2=" ">
+      <subfield code="a">Austen, Jane.</subfield>
+    </datafield>
+    <datafield tag="245" ind1="1" ind2="0">
+      <subfield code="a">Pride and prejudice.</subfield>
+      <subfield code="c">Jane Austen.</subfield>
+    </datafield>
+    <datafield tag="260" ind1=" " ind2=" ">
+      <subfield code="a">New York</subfield>
+      <subfield code="b">Scholastic</subfield>
+      <subfield code="c">2000</subfield>
+    </datafield>
+    <datafield tag="300" ind1=" " ind2=" ">
+      <subfield code="a">405 p.</subfield>
+    </datafield>
+    <datafield tag="852" ind1=" " ind2=" ">
+      <subfield code="h">YA Auste</subfield>
+      <subfield code="p">45302</subfield>
+      <subfield code="a">    </subfield>
+      <subfield code="c">Durham</subfield>
+    </datafield>
+    <datafield tag="961" ind1="w" ind2="l">
+      <subfield code="t">97</subfield>
+    </datafield>
+    <datafield tag="952" ind1=" " ind2=" ">
+      <subfield code="w">2009-10-26</subfield>
+      <subfield code="p">32107000453022</subfield>
+      <subfield code="v">0.00</subfield>
+      <subfield code="r">2012-01-24</subfield>
+      <subfield code="4">0</subfield>
+      <subfield code="0">0</subfield>
+      <subfield code="6">YA_AUSTE</subfield>
+      <subfield code="9">36849</subfield>
+      <subfield code="b">DUR</subfield>
+      <subfield code="1">0</subfield>
+      <subfield code="o">YA Auste</subfield>
+      <subfield code="d">2008-09-16</subfield>
+      <subfield code="7">0</subfield>
+      <subfield code="c">Shelves</subfield>
+      <subfield code="y">97</subfield>
+      <subfield code="s">2012-01-17</subfield>
+      <subfield code="l">4</subfield>
+      <subfield code="a">DUR</subfield>
+    </datafield>
+    <datafield tag="999" ind1=" " ind2=" ">
+      <subfield code="c">29640</subfield>
+      <subfield code="d">29640</subfield>
+    </datafield>
+  </record>
+</collection>

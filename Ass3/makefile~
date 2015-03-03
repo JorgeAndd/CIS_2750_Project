@@ -1,0 +1,22 @@
+CC      = gcc
+CFLAGS  = -Wall -std=c99 -I/usr/include/libxml2\
+			`pkg-config --cflags python3` -fPIC
+LDFLAGS = `pkg-config --libs libxml-2.0` `pkg-config --libs python3`\
+			`pkg-config --cflags python3`
+
+
+mxtool: mxutil.o mxtool.o mxwrapper.o
+	$(CC) -o mxtool mxutil.o mxtool.o $(CFLAGS) $(LDFLAGS)
+	ld -shared $(LDFLAGS) mxwrapper.o mxutil.o mxtool.o -o Mx.so
+
+mxwrapper.o: mxwrapper.c mxutil.o mxtool.o
+	$(CC) -c mxwrapper.c $(CFLAGS)
+
+mxutil.o: mxutil.c mxutil.h
+	$(CC) $(CFLAGS) -c mxutil.c
+
+mxtool.o: mxtool.c mxtool.h mxutil.h
+	$(CC) $(CFLAGS) -c mxtool.c
+
+clean:
+	rm -rf *o mxtool

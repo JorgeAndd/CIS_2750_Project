@@ -1,0 +1,1014 @@
+###############################
+# altro.py -- GUI on Python tkinter
+# Last updated:  7-Nov-14, Version 1
+#
+# Jorge Luiz Andrade
+# #0906139
+###############################
+
+import os
+import tempfile
+from curses.ascii import ispunct
+from subprocess import *
+import Mx
+import mysql.connector
+import re
+
+from tkinter import *
+from tkinter import ttk
+import tkinter.messagebox
+from tkinter import filedialog
+
+root = Tk()
+
+#Variables
+trecords = StringVar(value=())
+bbfield = IntVar()
+regex = StringVar()
+statusText = StringVar()
+
+entry1_text = StringVar()
+entry2_text = StringVar()
+entry3_text = StringVar()
+entry4_text = StringVar()
+query_text = StringVar()
+results = None
+
+collection = None
+activeRecs = []
+backupRecs = []
+reclist = []
+nrecs = 0
+
+queryWindow = False
+
+cnx = None
+
+#Functions
+
+#Check if database is valid
+def checkDb():
+	global cnx
+
+	username = ''
+	password = ''
+	hostname = 'dursley.socs.uoguelph.ca'
+	
+	if(len(sys.argv) > 2):
+		username = sys.argv[1]
+		password = sys.argv[2]
+		if(len(sys.argv) == 4):
+			hostname = sys.argv[3]
+	else:
+		print('Invalid number of command line arguments')
+		sys.exit()
+	
+	
+	try:
+		cnx = mysql.connector.connect(user=username, password=password, 
+										host=hostname, database=username)
+	except mysql.connector.Error as err:
+		print("Error connecting to database:\n{}".format(err))
+		sys.exit()
+	
+	#Create table if not exist
+	cursor = cnx.cursor()
+	
+	table = ('CREATE TABLE IF NOT EXISTS bibrec('
+				'`rec_id` INT AUTO_INCREMENT PRIMARY KEY,'
+				'`author` VARCHAR(60),'
+				'`title` VARCHAR(120),'
+				'`pubinfo` TEXT,'
+				'`callnum` VARCHAR(30),'
+				'`year` SMALLINT,'
+				'`xml` TEXT)')
+	
+	try:
+		cursor.execute(table)
+	except mysql.connector.Error as err:
+		print('Error creating bibrec table:\n{}'.format(err))
+		sys.exit()
+	
+#Check if MXTOOL_XSD variable is set. If not, ask user for the path and set it
+def checkEnvVariable():
+	initialized = False    
+
+	xsdVar = os.environ.get('MXTOOL_XSD')
+	while(initialized == False):
+		if(xsdVar == None):
+			response = tkinter.messagebox.askokcancel(message='MXTOOL_XSD '
+										'not set. Do you want to select the '
+										'MXTOOL_XSD variable manually?', 
+										title='MXTOOL_XSD not set')
+			if(response == True):
+				filepath = tkinter.filedialog.askopenfilename()
+				if(filepath != ''):
+					os.environ.putenv('MXTOOL_XSD', filepath)
+					status=Mx.init()
+					if(status == 0):
+						initialized = True
+			else:
+				exit()
+				break
+		else:
+			status=Mx.init();
+			if(status == 0):
+				initialized = True;
+
+#Opens a XML MARC file
+def openFile():
+	global collection
+	global nrecs
+    
+	filepath = tkinter.filedialog.askopenfilename()
+	if(filepath == ''):
+		return 
+		
+	if(collection != None):
+		response = tkinter.messagebox.askokcancel(message='Opening another xml'
+										' will result in loss of the current '
+										'opened file. Do you want to continue?',
+										title='Warning')
+		if(response == False):
+			return
+            
+	(status, collection, nrecs) = Mx.readFile(filepath)
+	if(status != 0):
+		tkinter.messagebox.showinfo(message='Error opening file', title='Error', icon='error')
+		collection = None
+	else:
+		statusText.set(str(nrecs) + ' records read')
+		initActiveRecs()
+		populateList()
+	
+
+#Insert new MARC records at the beggining of the loaded records 
+def insertFile():
+	global collection
+	global nrecs
+	
+	filepath = tkinter.filedialog.askopenfilename()
+
+	if(filepath == ''):
+		return 
+
+	tmpOutput = tempfile.NamedTemporaryFile()
+	tmpInput = tempfile.NamedTemporaryFile()
+	
+	status = Mx.writeFile(tmpInput.name, collection, reclist)
+
+	tmpInput.flush()
+	
+	cmd = './mxtool -cat ' + filepath + ' < ' + tmpInput.name + \
+			' > ' + tmpOutput.name			
+
+	cmdstatus = call(cmd, shell=True)
+	
+	(status2, collection, nrecs) = Mx.readFile(tmpOutput.name)
+	
+	if(status2 != 0):
+		statusText.set('Error inserting file')
+		collection = None
+	else:
+		initActiveRecs()
+		populateList()
+		statusText.set(str(nrecs - status) + ' records inserted. ' + str(nrecs) + ' total records.')
+		
+	tmpOutput.close
+	tmpInput.close	
+		
+
+#Insert new MARC records at the end of the loaded records
+def appendFile():
+	global collection
+	global nrecs
+	
+	filepath = tkinter.filedialog.askopenfilename()
+
+	if(filepath == ''):
+		return 
+
+	tmpOutput = tempfile.NamedTemporaryFile()
+	tmpInput = tempfile.NamedTemporaryFile()
+	
+	status = Mx.writeFile(tmpInput.name, collection, reclist)
+
+	cmd = './mxtool -cat ' + tmpInput.name + ' < ' + filepath + \
+			' > ' + tmpOutput.name			
+
+	cmdstatus = call(cmd, shell=True)
+	
+	(status2, collection, nrecs) = Mx.readFile(tmpOutput.name)
+	if(status2 != 0):
+		statusText.set('Error appending file')
+		collection = None
+	else:
+		initActiveRecs()
+		populateList()
+		statusText.set(str(nrecs - status) + ' records appended. ' + 
+						str(nrecs) + ' total records.')
+		
+	tmpOutput.close
+	tmpInput.close	
+
+#Saves the current MARC records to a file
+def saveAs():
+	if(collection == None):
+		tkinter.messagebox.showinfo(message='There are no records to be saved',
+									title='Empty collection')
+		return
+    
+    
+	filepath = tkinter.filedialog.asksaveasfilename(defaultextension='.xml')
+	if(filepath == ''):
+		return
+		
+	status = Mx.writeFile(filepath, collection, reclist)	
+	
+	statusText.set(str(status) + ' records written to file')
+
+#Print record to file in bib or lib format
+#arg: 1 Lib format
+#     2 Bib format
+def printReg(arg):
+	global reclist
+	
+	if(collection == None):
+		tkinter.messagebox.showinfo(message='No records to be written', icon='error')
+		return
+
+	filepath = tkinter.filedialog.asksaveasfilename(defaultextension='.xml')
+	if(filepath == ''):
+		return
+		
+	tmpOutput = tempfile.NamedTemporaryFile()
+	
+	records = Mx.writeFile(tmpOutput.name, collection, reclist)
+		
+	if(records == -1):
+		statusText.set('Error printing file', icon = 'error')	
+	
+	if(arg == 1):
+		cmd = './mxtool -lib < ' + tmpOutput.name + ' > ' + filepath
+	elif(arg == 2):
+		cmd = './mxtool -bib < ' + tmpOutput.name + ' > ' + filepath
+		
+	status = call(cmd, shell=True)		
+	if(status == 0):
+		if(arg == 1):
+			statusText.set('Library print successful. ' + str(records) + ' records written')
+		elif(arg == 2):
+			statusText.set('Bibliography print successful. ' + str(records) + 
+							' records written')
+	else:
+		if(arg == 1):
+			statusText.set('Error printing file in library format')
+		elif(arg == 2):
+			statusText.set('Error printing file in bibliography format')
+		
+	tmpOutput.close()
+	
+#Write valid records to listbox
+#Calls defRecList to update list of index current valid records
+def populateList():
+	records = []
+	
+	if(nrecs > 0):
+		dbmenu.entryconfig('Store all', state=ACTIVE)
+	else:
+		dbmenu.entryconfig('Store all', state=DISABLED)
+		return
+	
+	for i in range(nrecs):
+		if(activeRecs[i] == True):
+			bibdata = list(Mx.marc2bib(collection, i))
+			for j in range(4):
+				if(ispunct(bibdata[j][-1]) == False):
+					bibdata[j] += '.'
+				
+			records.append(str(i) + '. ' + bibdata[0] + ' ' + bibdata[1] +
+							 ' ' + bibdata[2])
+						 
+	trecords.set(tuple(records))
+	defRecList()
+		
+	
+#Exits application, calling functions to free allocated memory on C side
+def exit():
+	response = tkinter.messagebox.askyesno(message='Are you sure you want to '
+									'exit the application? All your unsaved '
+									'changes will be lost', title='Exit')
+	if(response == True):
+		if(collection != None):
+			Mx.freeFile(collection)
+		Mx.term()
+		root.destroy()
+    
+#Delete selected records on listbox
+def deleteRecords():
+	global backupRecs
+	global activeRecs
+
+	backupRecs = list(activeRecs)
+	
+	selected = list(map(int, lbox.curselection()))
+	
+	i = 0
+	j = 0
+	for n in selected:			
+		while(activeRecs[i + j] == False):
+				i += 1		
+		
+		while(j <= n):
+			while(activeRecs[i + j] == False):
+				i += 1
+
+			if(activeRecs[i + j] == True):
+				j += 1
+
+		activeRecs[i + j - 1] = False;
+	
+	populateList()
+		
+	nActive = activeRecs.count(True)
+	nDeleted = len(selected)
+	
+	if(nDeleted > 0):
+		undo_btn.config(state = 'enabled')
+	
+	statusText.set(str(nDeleted) + ' records deleted. ' + str(nActive) + 
+					' records remaining')
+
+#Undo the last deletion
+def undoDelete():
+	global activeRecs
+
+	activeRecs = list(backupRecs)
+	populateList()
+	
+	undo_btn.state(['disabled'])
+
+#Shows about window
+def about():
+	tkinter.messagebox.showinfo(message='Altro\n\nAltro is a program that '
+								'allows the visualization and manipulation of'
+								' MARC files.\n\nIt is compatible with the '
+								'MARC21slim XML schema.\n\n'
+								'Author: Jorge Luiz Andrade', 
+								title='About Altro', icon='question')
+
+#Function to keep/discard records
+#arg = 1 : keep
+#arg = 2 : discard
+def keepOrDiscard(arg):
+	global collection
+	global nrecs
+
+	if bbfield == 0:
+		field = 'a'
+	elif bbfield == 1:
+		field = 't'
+	else:
+		field = 'p'
+		
+	if(arg == 1):
+		action = 'keep'
+	else:
+		action = 'discard'
+		
+	tmpInput = tempfile.NamedTemporaryFile()
+	tmpOutput = tempfile.NamedTemporaryFile()
+	
+	status = Mx.writeFile(tmpInput.name, collection, reclist)
+	
+	cmd = './mxtool -' + action + ' ' + field + '=' + regex.get() + ' < ' +\
+			 tmpInput.name + ' > ' + tmpOutput.name
+	
+	cmdstatus = call(cmd, shell=True)
+	if(cmdstatus != 0):
+		statusText.set('Error in ' + action + 'action')
+		tmpOutput.close
+		tmpInput.close
+		return
+	
+	(status2, collection, nrecs) = Mx.readFile(tmpOutput.name)
+	if(status2 != 0):
+		statusText.set('Error in ' + action + ' action')
+		collection = None
+	else:
+		initActiveRecs()
+		populateList()
+		if(arg == 1):
+			statusText.set(str(status - nrecs) + ' records discarded. ' + str(nrecs) +\
+			 ' remaining records.')
+		else:
+			statusText.set(str(status- nrecs) + ' records kept. ' +\
+			 str(nrecs) + ' remaining records.')
+	
+	tmpOutput.close
+	tmpInput.close
+	
+#DB Functions
+
+#Store records to database
+#arg = 1 : all
+#arg = 2 : selected
+def dbStore(arg):	
+	cursor = cnx.cursor()
+	
+	nInsertions = 0
+	
+	if(arg == 1):
+		records = range(nrecs)
+	else:
+		records = list(map(int, lbox.curselection()))
+	
+	for i in records:	
+		tmpXml = tempfile.NamedTemporaryFile()
+		
+		status = Mx.writeFile(tmpXml.name, collection, [i])
+		if(status != 1):
+			statusText.set('Error. Records could not be parsed.')
+			return
+			
+		bdata = Mx.marc2bib(collection, i)
+		
+		author = bdata[0][:60]
+		title = bdata[1][:120]
+		pubinfo = bdata[2]
+		callnum = bdata[3][:30]
+		
+		try:
+			query = ('SELECT EXISTS(SELECT 1 FROM bibrec WHERE '
+						'author = %s AND title = %s)')
+			cursor.execute(query, (author, title))
+			(found,) = cursor.fetchone()
+		
+		
+			if(found > 0):
+				continue;
+		
+			m = re.search(r'.+?(\d{4}).+?', pubinfo)
+			if m:
+				year = m.group(1)
+			else:
+				year = None
+			
+			rawxml = tmpXml.read().decode('utf-8')
+		
+			m = re.search('.+?<marc:record>(.+?)</marc:record>.+?', 
+							rawxml, re.DOTALL)
+			if m:
+				xml = m.group(1)
+			else:
+				xml = ''
+			
+			query = ('INSERT INTO bibrec '
+						'(author, title, pubinfo, callnum, year, xml) '
+						'VALUES '
+						'(%s, %s, %s, %s, %s, %s)')
+		
+			cursor.execute(query, (author, title, pubinfo, 
+									callnum, year, xml))
+			nInsertions += 1
+			cnx.commit()
+			
+		except mysql.connector.Error as err:
+			statusText.set('Error storing record to database')
+		
+		tmpXml.close
+		
+	statusText.set(str(nInsertions) + ' records stored on database')	
+		
+
+def dbOpen():
+	global collection
+	global nrecs
+
+	if(collection != None):
+		response = tkinter.messagebox.askokcancel(message='Opening another xml'
+										' will result in loss of the current '
+										'opened file. Do you want to continue?',
+										title='Warning')
+		if(response == False):
+			return
+
+	tmpXml = tempfile.NamedTemporaryFile()
+	
+	text = ("<marc:collection xmlns:"
+            "marc=\"http://www.loc.gov/MARC21/slim\" "
+            "xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n"
+            "xsi:schemaLocation=\"http://www.loc.gov/MARC21/slim\n"
+            "http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd\">")
+	tmpXml.write(bytes(text, 'utf-8'))
+    
+	query = ('SELECT xml FROM bibrec ORDER BY author, title')
+	cursor = cnx.cursor()
+	cursor.execute(query)
+    
+	records = cursor.fetchall()
+    
+	for (xml,) in records:
+		tmpXml.write(b'\n\t<marc:record>')
+		tmpXml.write(bytes(str(xml), 'utf-8'))
+		tmpXml.write(b'\t</marc:record>')
+	tmpXml.write(b'\n</marc:collection>')
+    
+	tmpXml.flush()
+	(status, collection, nrecs) = Mx.readFile(tmpXml.name)
+	if(status != 0):
+		statusText.set('Error reading records from database')
+		collection = None
+	else:
+		statusText.set(str(nrecs) + ' records read')
+		initActiveRecs()
+		populateList()
+    
+	
+#Insert or append records from db to current records
+#arg = 1 : insert
+#arg = 2 : append
+def dbInsertAppend(arg):
+	global collection
+	global nrecs
+
+
+	#Create temporary file for records from db
+	tmpInput1 = tempfile.NamedTemporaryFile()
+	
+	text = ("<marc:collection xmlns:"
+            "marc=\"http://www.loc.gov/MARC21/slim\" "
+            "xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n"
+            "xsi:schemaLocation=\"http://www.loc.gov/MARC21/slim\n"
+            "http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd\">")
+	tmpInput1.write(bytes(text, 'utf-8'))
+    
+	query = ('SELECT xml FROM bibrec ORDER BY author, title')
+	cursor = cnx.cursor()
+	cursor.execute(query)
+    
+	records = cursor.fetchall()
+	nreads = len(records)
+    
+	for (xml,) in records:
+		tmpInput1.write(b'\n\t<marc:record>')
+		tmpInput1.write(bytes(str(xml), 'utf-8'))
+		tmpInput1.write(b'\t</marc:record>')
+	tmpInput1.write(b'\n</marc:collection>')
+	
+	#Create temporary file for current records
+	tmpInput2 = tempfile.NamedTemporaryFile()
+	Mx.writeFile(tmpInput2.name, collection, reclist)
+	
+	tmpInput1.flush()
+	tmpInput2.flush()
+	
+	tmpOutput = tempfile.NamedTemporaryFile()
+	if(arg == 1):
+		cmd = './mxtool -cat ' + tmpInput1.name + ' < ' + tmpInput2.name + \
+				' > ' + tmpOutput.name			
+	else:
+		cmd = './mxtool -cat ' + tmpInput2.name + ' < ' + tmpInput1.name + \
+				' > ' + tmpOutput.name
+	
+	cmdstatus = call(cmd, shell=True)
+		
+	tmpInput1.close()
+	tmpInput2.close()	
+	
+	(status2, collection, nrecs) = Mx.readFile(tmpOutput.name)
+	tmpOutput.close()
+	
+	if(status2 != 0):
+		if(arg == 1):
+			statusText.set('Error inserting file')
+		else:
+			statusText.set('Error appending file')
+
+		collection = None
+	else:
+		initActiveRecs()
+		populateList()
+		if(arg == 1):
+			statusText.set(str(nreads) + ' records inserted. ' + str(nrecs) + ' total records.')
+		else:
+			statusText.set(str(nreads) + ' records appended. ' + str(nrecs) + ' total records.')
+	
+
+	
+def dbPurge():
+	response = tkinter.messagebox.askokcancel(message='Are you sure you want '
+												'to remove all records from '
+												'the database?', 
+												title='Purging', icon='warning')
+	if(response == False):
+		return
+		
+	query = ('DELETE FROM bibrec')
+	cursor = cnx.cursor()
+	
+	try:
+		result = cursor.execute(query)
+		cnx.commit()
+		statusText.set('Database purged')
+	except mysql.connector.Error as err:
+		statusText.set('Error removing records from database')
+	
+def dbQuery():
+	global queryWindow
+	global entry1_text
+	global entry2_text
+	global entry3_text
+	global entry4_text
+	global query_text
+	global results
+	
+	query_text.set('SELECT')
+	
+	if queryWindow:
+		return
+	
+	queryWindow = True
+	transaction = IntVar()
+
+	w = Toplevel(c)
+	
+	w.title('Query')
+	
+	t1_rd = ttk.Radiobutton(w, text='Find all books by author', 
+							variable=transaction, value=0)
+							
+	t2_rd = ttk.Radiobutton(w, text='How many books were published in or after', 
+							variable=transaction, value=1)
+
+	t3_rd = ttk.Radiobutton(w, text='Find the oldest book by author', 
+							variable=transaction, value=2)
+							
+	t4_rd = ttk.Radiobutton(w, text='Find books with title containing', 
+							variable=transaction, value=3)
+	
+	t5_rd = ttk.Radiobutton(w, text='Another SQL query', variable=transaction, value=4)
+							
+	can1b_label = ttk.Label(w, text='(SQL wild card % is permitted')
+	can2b_label = ttk.Label(w, text='(year)?') 
+	can4b_label = ttk.Label(w, text='(SQL wild card % is permitted')
+	
+	entry1 = ttk.Entry(w, textvar = entry1_text)
+	entry2 = ttk.Entry(w, textvar = entry2_text)
+	entry3 = ttk.Entry(w, textvar = entry3_text)
+	entry4 = ttk.Entry(w, textvar = entry4_text)
+	queryentry = ttk.Entry(w, textvar = query_text)
+
+	sbmt_btn = ttk.Button(w, text='Submit', command = lambda: submitQuery(transaction.get()))
+	help_btn = ttk.Button(w, text='Help', command = tableInfo)
+	clear_btn = ttk.Button(w, text='Clear', command = clearResults)
+
+	textscroll_y = Scrollbar(w, orient=VERTICAL)
+	textscroll_x = Scrollbar(w, orient=HORIZONTAL)	
+	results = Text(w, height=5, wrap=NONE, state=DISABLED, 
+					yscrollcommand=textscroll_y.set, xscrollcommand=textscroll_x.set)
+					
+	textscroll_y.config(command=results.yview)
+	textscroll_x.config(command=results.xview)
+	
+	t1_rd.grid(column=0, row=0, sticky=W, pady=(10,0))
+	entry1.grid(column=1, row=0, sticky=W, pady=(10,0))
+	can1b_label.grid(column=2, row=0, sticky=W, pady=(10,0))
+	
+	t2_rd.grid(column=0, row=1, sticky=W, pady=(10,0))
+	entry2.grid(column=1, row=1, sticky=W, pady=(10,0))
+	can2b_label.grid(column=2, row=1, sticky=W, pady=(10,0))
+	
+	t3_rd.grid(column=0, row=2, sticky=W, pady=(10,0))
+	entry3.grid(column=1, row=2, sticky=W, pady=(10,0))
+	
+	t4_rd.grid(column=0, row=3, sticky=W, pady=(10,0))
+	entry4.grid(column=1, row=3, sticky=W, pady=(10,0))
+	can4b_label.grid(column=2, row=3, sticky=W, pady=(10,0))
+	
+	t5_rd.grid(column=0, row=4, sticky=W, pady=(10,0))
+	queryentry.grid(column=1, row=4, sticky=W, pady=(10,0))
+	
+	sbmt_btn.grid(column=1, row=5, sticky=W, pady=(20,0))
+	help_btn.grid(column=2, row=5, sticky=E, pady=(10,0))
+	
+	results.grid(column=0, row=6, columnspan=4, rowspan=3, sticky=(N,S,E,W), pady=(20,0))
+	textscroll_y.grid(column=4, row=6, rowspan=3, sticky=(N,S), pady=(20,0))
+	textscroll_x.grid(column=0, row=10, columnspan=4, sticky=(E,W), pady=(0,10))
+	
+	clear_btn.grid(column=1, row=11, sticky=(E,W), pady=(10,5))
+	
+	w.protocol("WM_DELETE_WINDOW", lambda: closeQuery(w))
+
+#Clear results panel
+def clearResults():
+	global results
+	
+	results.config(state=NORMAL)
+	results.delete(1.0, END)
+	results.config(state=DISABLED)
+
+#Submit the selected query to database
+def submitQuery(arg):
+	global results
+	query = ''
+	
+	cursor = cnx.cursor()
+
+	results.config(state=NORMAL)
+	if arg == 0:
+		query = ('SELECT author, title, pubinfo, callnum FROM bibrec '
+					'WHERE author LIKE %s ORDER BY author, title')
+		cursor.execute(query, (entry1_text.get(),))
+		records = cursor.fetchall()
+    
+		result = ''
+		index = 0
+		lenght = 0
+		
+		if len(records) == 0:
+			results.insert(END, 'No results\n')
+			lenght = 10		
+		else:
+			for (author, title, pubinfo, callnum) in records:
+				if(ispunct(author[-1]) == False):
+					author += '.'
+			
+				if(ispunct(title[-1]) == False):
+					title += '.'
+					
+				if(ispunct(pubinfo[-1]) == False):
+					pubinfo += '.'
+					
+				if(ispunct(callnum[-1]) == False):
+					callnum += '.'
+			
+				result = '{0}. {1} {2} {3} {4}'.format(index, author, title, pubinfo, callnum)
+				lenght = len(result)
+				results.insert(END, result + '\n')
+				index += 1
+	elif arg == 1:
+		if entry2_text.get().isdigit() == False:
+			return
+		
+		query = ('SELECT COUNT(*) FROM bibrec WHERE year > %s')
+		cursor.execute(query, (entry2_text.get(),))
+		(records,) = cursor.fetchone()
+		
+		result = '{0} books after {1}'.format(records, entry2_text.get())
+		lenght = len(result)
+		
+		results.insert(END, result + '\n') 
+	elif arg == 2:
+		query = ('SELECT author, title, pubinfo, callnum FROM bibrec '
+					'WHERE author=%s ORDER BY year LIMIT 1')
+		cursor.execute(query, (entry3_text.get(),))
+		record = cursor.fetchall()
+
+		if len(record) == 0:
+			results.insert(END, 'No results\n')
+			lenght = 10		
+		else:
+			(author, title, pubinfo, callnum) = record[0]
+			if(ispunct(author[-1]) == False):
+				author += '.'
+		
+			if(ispunct(title[-1]) == False):
+				title += '.'
+				
+			if(ispunct(pubinfo[-1]) == False):
+				pubinfo += '.'
+				
+			if(ispunct(callnum[-1]) == False):
+				callnum += '.'
+		
+			result = '{0} {1} {2} {3}'.format(author, title, pubinfo, callnum)
+			lenght = len(result)
+			results.insert(END, result + '\n')
+	elif arg == 3:
+		query = ('SELECT author, title, pubinfo, callnum FROM bibrec '
+					'WHERE title LIKE %s ORDER BY author, title')
+		
+		cursor.execute(query, ('%' + entry4_text.get() + '%',))
+		records = cursor.fetchall()
+    
+		result = ''
+		index = 0
+		lenght = 0
+		
+		if len(records) == 0:
+			results.insert(END, 'No results\n')
+			lenght = 10		
+		else:
+			for (author, title, pubinfo, callnum) in records:
+				if(ispunct(author[-1]) == False):
+					author += '.'
+			
+				if(ispunct(title[-1]) == False):
+					title += '.'
+					
+				if(ispunct(pubinfo[-1]) == False):
+					pubinfo += '.'
+					
+				if(ispunct(callnum[-1]) == False):
+					callnum += '.'
+			
+				result = '{0}. {1} {2} {3} {4}'.format(index, author, title, pubinfo, callnum)
+				lenght = len(result)
+				results.insert(END, result + '\n')
+				index += 1
+	else:
+		try:
+			cursor.execute(query_text.get())
+			
+			records = cursor.fetchall()
+		
+			if len(records) == 0:
+				results.insert(END, 'No results\n')
+				lenght = 10
+			else:
+				for record in records:
+					result = ''
+					for field in record:
+						result += field
+					lenght = len(result)
+					results.insert(END, result + '\n')
+		except mysql.connector.Error as err:
+			lenght = len(str(err))
+			results.insert(END, 'ERROR: ' + str(err) + '\n')
+			lenght += 7
+
+	dashes = '-' * lenght
+	results.insert(END, dashes + '\n')
+		
+	results.see(END)	
+	results.config(state=DISABLED)
+	
+#Show table info
+def tableInfo():
+	tkinter.messagebox.showinfo(message='Table name: bibrec\n'
+						'Columns:\n'
+						'  -rec_id\n  -author\n  -title\n'
+						'  -pubinfo\n  -callnum\n  -year\n  -xml',
+						title='Help - Table info', icon='question')
+			
+#Function to handle closing of query window
+def closeQuery(w):
+	global queryWindow
+	
+	global entry1_text
+	global entry2_text
+	global entry3_text
+	global entry4_text
+	global query_text
+	
+	entry1_text.set('')
+	entry2_text.set('')
+	entry3_text.set('')
+	entry4_text.set('')
+	query_text.set('')
+	
+	clearResults()
+	
+	queryWindow = False
+	w.destroy()
+
+#Updates reclist with valid indexes
+def defRecList():
+	global reclist
+	
+	reclist = []
+	for i in range(len(activeRecs)):
+		if activeRecs[i] == True:
+			reclist.append(i)
+
+#Initialize activeRecs list setting all True
+def initActiveRecs():
+	global activeRecs
+
+	activeRecs = [True] * nrecs
+
+def onListSelection(event):	
+	if(len(lbox.curselection())):
+		delete_btn.config(state = 'enabled') 
+		dbmenu.entryconfig('Store selected', state=ACTIVE)
+	else:
+		delete_btn.config(state = 'disabled') 
+		dbmenu.entryconfig('Store selected', state=DISABLED)
+
+#GUI
+root.title('Altro')
+
+# Create and grid the outer content frame
+c = ttk.Frame(root, padding=(5, 5, 12, 0))
+c.grid(column=0, row=0, sticky=(N,W,E,S))
+root.grid_columnconfigure(0, weight=1)
+root.grid_rowconfigure(0,weight=1)
+
+# Menu bar
+menubar = Menu(root, relief='flat')
+
+#Create file menu
+filemenu = Menu(menubar, tearoff=0)
+filemenu.add_command(label="Open", command=openFile)
+filemenu.add_command(label="Insert", command=insertFile)
+filemenu.add_command(label="Append", command=appendFile)
+filemenu.add_command(label="Save as...", command=saveAs)
+filemenu.add_separator()
+filemenu.add_command(label="Exit", command=exit)
+menubar.add_cascade(label="File", menu=filemenu)
+
+#Create print menu
+printmenu = Menu(menubar, tearoff = 0)
+printmenu.add_command(label="Library", command= lambda: printReg(1))
+printmenu.add_command(label="Bibliography", command= lambda: printReg(2))
+menubar.add_cascade(label="Print", menu=printmenu)
+
+#Create help menu
+helpmenu = Menu(menubar, tearoff = 0)
+helpmenu.add_command(label="Keep/Discard REGEX")
+helpmenu.add_command(label="About Altro", command=about)
+menubar.add_cascade(label="Help", menu=helpmenu)
+
+dbmenu = Menu(menubar, tearoff = 0)
+dbmenu.add_command(label='Store all', command= lambda: dbStore(1), state=DISABLED)
+dbmenu.add_command(label='Store selected', command= lambda: dbStore(2), state=DISABLED)
+dbmenu.add_command(label='Open', command=dbOpen)
+dbmenu.add_command(label='Insert', command= lambda: dbInsertAppend(1))
+dbmenu.add_command(label='Append', command= lambda: dbInsertAppend(2))
+dbmenu.add_command(label='Purge', command=dbPurge)
+dbmenu.add_command(label='Query', command=dbQuery)
+menubar.add_cascade(label='Database', menu=dbmenu)
+
+
+# display the menu
+root.config(menu=menubar)
+
+lbox = Listbox(c, listvariable=trecords, height=5, selectmode=EXTENDED)
+scrollbar_y = Scrollbar(c, orient=VERTICAL, command=lbox.yview)
+scrollbar_x = Scrollbar(c, orient=HORIZONTAL, command=lbox.xview)
+lbox.configure(yscrollcommand=scrollbar_y.set, xscrollcommand=scrollbar_x.set)
+
+delete_btn = ttk.Button(c, text='Delete Selected Records', 
+                        command=deleteRecords, state='disabled')
+
+bb1_rd = ttk.Radiobutton(c, text='Author', variable=bbfield, value=0)
+bb2_rd = ttk.Radiobutton(c, text='Title', variable=bbfield, value=1)
+bb3_rd = ttk.Radiobutton(c, text='Pub. Info', variable=bbfield, value=2)
+
+regex_label = ttk.Label(c, text='Regex:')
+regex_entry = ttk.Entry(c, textvariable=regex)
+
+keep_btn = ttk.Button(c, text='Keep', command= lambda: keepOrDiscard(1), 
+						default='active')
+discard_btn = ttk.Button(c, text='Discard', command= lambda: keepOrDiscard(2), 
+						default='active')
+undo_btn = ttk.Button(c, text='Undo', command=undoDelete, state='disabled')
+
+status_bar = ttk.Label(root, textvariable=statusText, relief=SUNKEN)
+
+# Grid all the widgets
+# Grid all the widgets
+lbox.grid(column=0, row=0, columnspan=4, rowspan=3, sticky=(N,S,E,W))
+scrollbar_y.grid(column=5, row=0, rowspan=3, sticky=(N,S))
+scrollbar_x.grid(column=0, row=3, columnspan=4, sticky=(E,W), pady=(0,10))
+delete_btn.grid(column=0, row=4, columnspan=4, sticky=(E,W), pady=(0,5))
+undo_btn.grid(column=2, row=5, sticky=(E,W), pady=(0,15))
+
+bb1_rd.grid(column=0, row=6, sticky=W, padx=2)
+bb2_rd.grid(column=0, row=7, sticky=W, padx=2)
+bb3_rd.grid(column=0, row=8, sticky=W, padx=2)
+
+regex_label.grid(column=1, row=6)
+regex_entry.grid(column=2, row=6, columnspan=2, sticky=W)
+keep_btn.grid(column=2, row=7, sticky=W, pady=(15,0))
+discard_btn.grid(column=3, row=7, sticky=W, pady=(15,0))
+
+
+status_bar.grid(column=0, row=8, columnspan=7, sticky=(E,S,W), pady=(15,0), padx=0)
+
+bbfield.set(1)
+regex.set('')
+lbox.selection_set(0)
+
+root.columnconfigure(0, weight=1)
+root.rowconfigure(0, weight=1)
+
+c.columnconfigure(0, weight=1)
+c.rowconfigure(1, weight=1)
+
+checkDb()
+root.update()
+
+root.minsize(root.winfo_width(), root.winfo_height())
+
+checkEnvVariable()
+statusText.set('')
+
+lbox.bind('<<ListboxSelect>>', onListSelection)
+
+root.mainloop()
+try:
+    root.destroy()
+except tkinter.TclError:
+    pass 

@@ -1,0 +1,456 @@
+###############################
+# altro.py -- GUI on Python tkinter
+# Last updated:  7-Nov-14, Version 1
+#
+# Jorge Luiz Andrade
+# #0906139
+###############################
+
+import os
+import tempfile
+from curses.ascii import ispunct
+from subprocess import *
+import Mx
+
+from tkinter import *
+from tkinter import ttk
+import tkinter.messagebox
+from tkinter import filedialog
+
+root = Tk()
+
+#Variables
+trecords = StringVar(value=())
+bbfield = IntVar()
+regex = StringVar()
+statusText = StringVar()
+collection = None
+activeRecs = []
+backupRecs = []
+reclist = []
+nrecs = 0
+
+#Functions
+
+#Check if MXTOOL_XSD variable is set. If not, ask user for the path and set it
+def checkEnvVariable():
+	initialized = False    
+
+	xsdVar = os.environ.get('MXTOOL_XSD')
+	while(initialized == False):
+		if(xsdVar == None):
+			response = tkinter.messagebox.askokcancel(message='MXTOOL_XSD '
+										'not set. Do you want to select the '
+										'MXTOOL_XSD variable manually?', 
+										title='MXTOOL_XSD not set')
+			if(response == True):
+				filepath = tkinter.filedialog.askopenfilename()
+				if(filepath != ''):
+					os.environ.putenv('MXTOOL_XSD', filepath)
+					status=Mx.init()
+					if(status == 0):
+						initialized = True
+			else:
+				exit()
+				break
+		else:
+			status=Mx.init();
+			if(status == 0):
+				initialized = True;
+
+#Opens a XML MARC file
+def openFile():
+	global collection
+	global nrecs
+    
+	filepath = tkinter.filedialog.askopenfilename()
+	if(filepath == ''):
+		return 
+		
+	if(collection != None):
+		response = tkinter.messagebox.askokcancel(message='Opening another xml'
+										' will result in loss of the current '
+										'opened file. Do you want to continue?',
+										title='Warning')
+		if(response == False):
+			return
+            
+	(status, collection, nrecs) = Mx.readFile(filepath)
+	if(status != 0):
+		tkinter.messagebox.showinfo(message='Error opening file', title='Error', icon='error')
+		collection = None
+	else:
+		statusText.set(str(nrecs) + ' records read')
+		initActiveRecs()
+		populateList()
+	
+
+#Insert new MARC records at the beggining of the loaded records 
+def insertFile():
+	global collection
+	global nrecs
+	
+	filepath = tkinter.filedialog.askopenfilename()
+
+	if(filepath == ''):
+		return 
+
+	tmpOutput = tempfile.NamedTemporaryFile()
+	tmpInput = tempfile.NamedTemporaryFile()
+	
+	status = Mx.writeFile(tmpInput.name, collection, reclist)
+
+	cmd = './mxtool -cat ' + filepath + ' < ' + tmpInput.name + \
+			' > ' + tmpOutput.name			
+
+	cmdstatus = call(cmd, shell=True)
+	
+	(status2, collection, nrecs) = Mx.readFile(tmpOutput.name)
+	if(status2 != 0):
+		statusText.set('Error inserting file')
+		collection = None
+	else:
+		initActiveRecs()
+		populateList()
+		statusText.set(str(nrecs - status) + ' records inserted. ' + str(nrecs) + ' total records.')
+		
+	tmpOutput.close
+	tmpInput.close	
+		
+
+#Insert new MARC records at the end of the loaded records
+def appendFile():
+	global collection
+	global nrecs
+	
+	filepath = tkinter.filedialog.askopenfilename()
+
+	if(filepath == ''):
+		return 
+
+	tmpOutput = tempfile.NamedTemporaryFile()
+	tmpInput = tempfile.NamedTemporaryFile()
+	
+	status = Mx.writeFile(tmpInput.name, collection, reclist)
+
+	cmd = './mxtool -cat ' + tmpInput.name + ' < ' + filepath + \
+			' > ' + tmpOutput.name			
+
+	cmdstatus = call(cmd, shell=True)
+	
+	(status2, collection, nrecs) = Mx.readFile(tmpOutput.name)
+	if(status2 != 0):
+		statusText.set('Error appending file')
+		collection = None
+	else:
+		initActiveRecs()
+		populateList()
+		statusText.set(str(nrecs - status) + ' records appended. ' + str(nrecs) + ' total records.')
+		
+	tmpOutput.close
+	tmpInput.close	
+
+#Saves the current MARC records to a file
+def saveAs():
+	if(collection == None):
+		tkinter.messagebox.showinfo(message='There are no records to be saved',
+									title='Empty collection')
+		return
+    
+    
+	filepath = tkinter.filedialog.asksaveasfilename(defaultextension='.xml')
+	if(filepath == ''):
+		return
+		
+	status = Mx.writeFile(filepath, collection, reclist)	
+	
+	statusText.set(str(status) + ' records written to file')
+
+#Print record to file in bib or lib format
+#arg: 1 Lib format
+#     2 Bib format
+def printReg(arg):
+	global reclist
+	
+	if(collection == None):
+		tkinter.messagebox.showinfo(message='No records to be written', icon='error')
+		return
+
+	filepath = tkinter.filedialog.asksaveasfilename(defaultextension='.xml')
+	if(filepath == ''):
+		return
+		
+	tmpOutput = tempfile.NamedTemporaryFile()
+	
+	records = Mx.writeFile(tmpOutput.name, collection, reclist)
+		
+	if(records == -1):
+		statusText.set('Error printing file', icon = 'error')	
+	
+	if(arg == 1):
+		cmd = './mxtool -lib < ' + tmpOutput.name + ' > ' + filepath
+	elif(arg == 2):
+		cmd = './mxtool -bib < ' + tmpOutput.name + ' > ' + filepath
+		
+	status = call(cmd, shell=True)		
+	if(status == 0):
+		if(arg == 1):
+			statusText.set('Library print successful. ' + str(records) + ' records written')
+		elif(arg == 2):
+			statusText.set('Bibliography print successful. ' + str(records) + 
+							' records written')
+	else:
+		if(arg == 1):
+			statusText.set('Error printing file in library format')
+		elif(arg == 2):
+			statusText.set('Error printing file in bibliography format')
+		
+	tmpOutput.close()
+	
+#Write valid records to listbox
+#Calls defRecList to update list of index current valid records
+def populateList():
+	records = []
+	for i in range(nrecs):
+		if(activeRecs[i] == True):
+			bibdata = list(Mx.marc2bib(collection, i))
+			for j in range(4):
+				if(ispunct(bibdata[j][-1]) == False):
+					bibdata[j] += '.'
+				
+			records.append(str(i) + '. ' + bibdata[0] + ' ' + bibdata[1] +
+							 ' ' + bibdata[2])
+						 
+	trecords.set(tuple(records))
+	defRecList()
+		
+	
+#Exits application, calling functions to free allocated memory on C side
+def exit():
+	response = tkinter.messagebox.askyesno(message='Are you sure you want to '
+									'exit the application? All your unsaved '
+									'changes will be lost', title='Exit')
+	if(response == True):
+		if(collection != None):
+			Mx.freeFile(collection)
+		Mx.term()
+		root.destroy()
+    
+#Delete selected records on listbox
+def deleteRecords():
+	global backupRecs
+	global activeRecs
+
+	backupRecs = list(activeRecs)
+	
+	selected = lbox.curselection()
+	
+	i = 0
+	j = 0
+	for n in selected:			
+		while(activeRecs[i + j] == False):
+				i += 1		
+		
+		while(j <= n):
+			while(activeRecs[i + j] == False):
+				i += 1
+
+			if(activeRecs[i + j] == True):
+				j += 1
+
+		activeRecs[i + j - 1] = False;
+	
+	populateList()
+	undo_btn.config(state = 'enabled')	
+	nActive = activeRecs.count(True)
+	nDeleted = len(selected)
+	
+	statusText.set(str(nDeleted) + ' records deleted. ' + str(nActive) + 
+					' records remaining')
+
+#Undo the last deletion
+def undoDelete():
+	global activeRecs
+
+	activeRecs = list(backupRecs)
+	populateList()
+	
+	undo_btn.state(['disabled'])
+
+#Shows about window
+def about():
+	tkinter.messagebox.showinfo(message='Altro\n\nAltro is a program that '
+								'allows the visualization and manipulation of'
+								' MARC files.\n\nIt is compatible with the '
+								'MARC21slim XML schema.\n\n'
+								'Author: Jorge Luiz Andrade', 
+								title='About Altro', icon='question')
+
+#Function to keep/discard records
+#arg = 1 : keep
+#arg = 2 : discard
+def keepOrDiscard(arg):
+	global collection
+	global nrecs
+
+	if bbfield == 0:
+		field = 'a'
+	elif bbfield == 1:
+		field = 't'
+	else:
+		field = 'p'
+		
+	if(arg == 1):
+		action = 'keep'
+	else:
+		action = 'discard'
+		
+	tmpInput = tempfile.NamedTemporaryFile()
+	tmpOutput = tempfile.NamedTemporaryFile()
+	
+	status = Mx.writeFile(tmpInput.name, collection, reclist)
+	
+	cmd = './mxtool -' + action + ' ' + field + '=' + regex.get() + ' < ' +\
+			 tmpInput.name + ' > ' + tmpOutput.name
+	
+	cmdstatus = call(cmd, shell=True)
+	if(cmdstatus != 0):
+		statusText.set('Error in ' + action + 'action')
+		tmpOutput.close
+		tmpInput.close
+		return
+	
+	(status2, collection, nrecs) = Mx.readFile(tmpOutput.name)
+	if(status2 != 0):
+		statusText.set('Error in ' + action + ' action')
+		collection = None
+	else:
+		initActiveRecs()
+		populateList()
+		if(arg == 1):
+			statusText.set(str(status - nrecs) + ' records discarded. ' + str(nrecs) +\
+			 ' remaining records.')
+		else:
+			statusText.set(str(status- nrecs) + ' records kept. ' +\
+			 str(nrecs) + ' remaining records.')
+	
+	tmpOutput.close
+	tmpInput.close	
+
+    
+#Updates reclist with valid indexes
+def defRecList():
+	global reclist
+	
+	reclist = []
+	for i in range(len(activeRecs)):
+		if(activeRecs[i] == True):
+			reclist.append(i)
+
+#Initialize activeRecs list setting all True
+def initActiveRecs():
+	global activeRecs
+
+	activeRecs = [True] * nrecs
+
+
+#GUI
+root.title('Altro')
+
+# Create and grid the outer content frame
+c = ttk.Frame(root, padding=(5, 5, 12, 0))
+c.grid(column=0, row=0, sticky=(N,W,E,S))
+root.grid_columnconfigure(0, weight=1)
+root.grid_rowconfigure(0,weight=1)
+
+# Menu bar
+menubar = Menu(root, relief='flat')
+
+#Create file menu
+filemenu = Menu(menubar, tearoff=0)
+filemenu.add_command(label="Open", command=openFile)
+filemenu.add_command(label="Insert", command=insertFile)
+filemenu.add_command(label="Append", command=appendFile)
+filemenu.add_command(label="Save as...", command=saveAs)
+filemenu.add_separator()
+filemenu.add_command(label="Exit", command=exit)
+menubar.add_cascade(label="File", menu=filemenu)
+
+#Create print menu
+printmenu = Menu(menubar, tearoff = 0)
+printmenu.add_command(label="Library", command= lambda: printReg(1))
+printmenu.add_command(label="Bibliography", command= lambda: printReg(2))
+menubar.add_cascade(label="Print", menu=printmenu)
+
+#Create help menu
+helpmenu = Menu(menubar, tearoff = 0)
+helpmenu.add_command(label="Keep/Discard REGEX")
+helpmenu.add_command(label="About Altro", command=about)
+menubar.add_cascade(label="Help", menu=helpmenu)
+
+# display the menu
+root.config(menu=menubar)
+
+lbox = Listbox(c, listvariable=trecords, height=5, selectmode=EXTENDED)
+scrollbar_y = Scrollbar(c, orient=VERTICAL, command=lbox.yview)
+scrollbar_x = Scrollbar(c, orient=HORIZONTAL, command=lbox.xview)
+lbox.configure(yscrollcommand=scrollbar_y.set, xscrollcommand=scrollbar_x.set)
+
+delete_btn = ttk.Button(c, text='Delete Selected Records', 
+                        command=deleteRecords, default='disabled')
+
+bb1_rd = ttk.Radiobutton(c, text='Author', variable=bbfield, value=0)
+bb2_rd = ttk.Radiobutton(c, text='Title', variable=bbfield, value=1)
+bb3_rd = ttk.Radiobutton(c, text='Pub. Info', variable=bbfield, value=2)
+
+regex_label = ttk.Label(c, text='Regex:')
+regex_entry = ttk.Entry(c, textvariable=regex)
+
+keep_btn = ttk.Button(c, text='Keep', command= lambda: keepOrDiscard(1), default='active')
+discard_btn = ttk.Button(c, text='Discard', command= lambda: keepOrDiscard(2), default='active')
+undo_btn = ttk.Button(c, text='Undo', command=undoDelete, state='disabled')
+
+status_bar = ttk.Label(root, textvariable=statusText, relief=SUNKEN)
+
+# Grid all the widgets
+# Grid all the widgets
+lbox.grid(column=0, row=0, columnspan=4, rowspan=3, sticky=(N,S,E,W))
+scrollbar_y.grid(column=5, row=0, rowspan=3, sticky=(N,S))
+scrollbar_x.grid(column=0, row=3, columnspan=4, sticky=(E,W), pady=(0,10))
+delete_btn.grid(column=0, row=4, columnspan=4, sticky=(E,W), pady=(0,5))
+undo_btn.grid(column=2, row=5, sticky=(E,W), pady=(0,15))
+
+bb1_rd.grid(column=0, row=6, sticky=W, padx=2)
+bb2_rd.grid(column=0, row=7, sticky=W, padx=2)
+bb3_rd.grid(column=0, row=8, sticky=W, padx=2)
+
+regex_label.grid(column=1, row=6)
+regex_entry.grid(column=2, row=6, columnspan=2, sticky=W)
+keep_btn.grid(column=2, row=7, sticky=W, pady=(15,0))
+discard_btn.grid(column=3, row=7, sticky=W, pady=(15,0))
+
+
+status_bar.grid(column=0, row=8, columnspan=7, sticky=(E,S,W), pady=(15,0), padx=0)
+
+bbfield.set(1)
+regex.set('')
+lbox.selection_set(0)
+
+root.columnconfigure(0, weight=1)
+root.rowconfigure(0, weight=1)
+
+c.columnconfigure(0, weight=1)
+c.rowconfigure(1, weight=1)
+
+root.update()
+
+root.minsize(root.winfo_width(), root.winfo_height())
+
+checkEnvVariable()
+statusText.set('')
+
+root.mainloop()
+try:
+    root.destroy()
+except tkinter.TclError:
+    pass 

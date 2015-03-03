@@ -1,0 +1,169 @@
+/********
+mxwrapper.c -- source file
+Last updated:  7-Nov-14, Version 1
+
+Jorge Luiz Andrade
+#0906139
+********/
+
+#include <Python.h>
+
+#include "mxtool.h"
+
+PyObject *Mx_init( PyObject *self, PyObject *args );
+PyObject *Mx_readFile( PyObject *self, PyObject *args );
+PyObject *Mx_marc2bib( PyObject *self, PyObject *args );
+PyObject *Mx_writeFile( PyObject *self, PyObject *args );
+PyObject *Mx_freeFile( PyObject *self, PyObject *args );
+PyObject *Mx_term( PyObject *self, PyObject *args );
+
+static PyMethodDef MxMethods[] =
+{
+    {"init", Mx_init, METH_VARARGS},
+    {"readFile", Mx_readFile, METH_VARARGS},
+    {"marc2bib", Mx_marc2bib, METH_VARARGS},
+    {"writeFile", Mx_writeFile, METH_VARARGS},
+    {"freeFile", Mx_freeFile, METH_VARARGS},
+    {"term", Mx_term, METH_VARARGS},
+    {NULL, NULL}
+};
+
+static struct PyModuleDef mxModuleDef = {
+    PyModuleDef_HEAD_INIT,
+    "Mx", //enable "import Mx"
+    NULL, //omit module documentation
+    -1, //module keeps state in global variables
+    MxMethods //link module name "Mx" to methods table
+};
+
+static xmlSchemaPtr schema;
+
+PyObject *Mx_init( PyObject *self, PyObject *args )
+{
+    char *xsdfile;
+
+    xsdfile = getenv("MXTOOL_XSD");
+    schema = mxInit(xsdfile);
+
+    if(schema != NULL)
+    {
+        return Py_BuildValue("i", 0);
+    }else
+        return Py_BuildValue("i", -1);
+
+}
+
+PyObject *Mx_readFile( PyObject *self, PyObject *args )
+{
+    char *filename;
+
+
+    PyArg_ParseTuple(args, "s", &filename);
+
+    FILE *inputFile = fopen(filename, "r");
+
+    XmElem *top;
+    int status;
+    if(inputFile != NULL)
+        status = mxReadFile(inputFile, schema, &top);
+    else
+        status = -1;
+
+    int nElem = (status == 0) ? top->nsubs : 0;
+
+    return Py_BuildValue("iki", status, (unsigned long)top, nElem);
+}
+
+PyObject *Mx_marc2bib( PyObject *self, PyObject *args )
+{
+    XmElem *collection;
+    int recno;
+
+    PyArg_ParseTuple(args, "ki", (unsigned long)&collection, &recno);
+
+    BibData bdata;
+    marc2bib((*(collection->subelem))[recno], bdata);
+
+    PyObject *bibObject = Py_BuildValue("ssss", bdata[AUTHOR], bdata[TITLE],
+                                        bdata[PUBINFO], bdata[CALLNUM]);
+
+    free(bdata[AUTHOR]);
+    free(bdata[TITLE]);
+    free(bdata[PUBINFO]);
+    free(bdata[CALLNUM]);
+
+    return bibObject;
+}
+
+PyObject *Mx_writeFile( PyObject *self, PyObject *args )
+{
+    char *filename;
+    XmElem *collection;
+    PyObject *reclist;
+
+    PyArg_ParseTuple( args, "skO", &filename,
+                     (unsigned long*)&collection, &reclist );
+
+    FILE *outputfile = fopen(filename, "w");
+
+    XmElem *shallow = malloc(sizeof(XmElem));
+    assert(shallow);
+
+
+    shallow->tag = collection->tag;
+    shallow->text = collection->text;
+    shallow->isBlank = collection->isBlank;
+    shallow->nattribs = collection->nattribs;
+
+    shallow->attrib = collection->attrib;
+
+    unsigned long nElem = 0;
+
+    //Count number of elements
+    nElem = PyList_Size(reclist);
+
+    shallow->nsubs = nElem;
+    shallow->subelem = malloc(sizeof(XmElem*) * nElem);
+    assert(shallow->subelem);
+
+    //Populate subelem array
+    for(int i = 0; i < nElem; i++)
+    {
+        PyObject *pyIndex;
+        pyIndex = PyList_GetItem(reclist, i);
+        int index = PyLong_AsUnsignedLongMask(pyIndex);
+
+        (*(shallow->subelem))[i] = (*(collection->subelem))[index];
+    }
+
+    int status = mxWriteFile(shallow, outputfile);
+
+    fclose(outputfile);
+
+    free(shallow->subelem);
+    free(shallow);
+
+    return Py_BuildValue("i", status);
+}
+
+PyObject *Mx_freeFile( PyObject *self, PyObject *args )
+{
+    XmElem *collection;
+
+    PyArg_ParseTuple( args, "k", (unsigned long*)&collection );
+
+    mxCleanElem(collection);
+
+    return Py_None;
+}
+
+PyObject *Mx_term( PyObject *self, PyObject *args )
+{
+    mxTerm(schema);
+
+    return Py_None;
+}
+
+PyMODINIT_FUNC PyInit_Mx(void) {
+    return PyModule_Create( &mxModuleDef );
+}

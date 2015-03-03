@@ -1,0 +1,20 @@
+# depslib dependency file v1.0
+1411329304 source:/home/jorge/Documents/Intgr/Ass1/mxutil.cpp
+	"mxutil.h"
+
+1411604145 /home/jorge/Documents/Intgr/Ass1/mxutil.h
+	<stdio.h>
+	<string.h>
+	<libxml/xmlschemastypes.h>
+
+1411605819 source:/home/jorge/Documents/Intgr/Ass1/auxiliar.c
+	"mxutil.h"
+	<stdio.h>
+
+1412472596 source:/home/jorge/Documents/Intgr/Ass1/mxutil.c
+	"mxutil.h"
+
+1411560437 source:/home/jorge/Documents/Intgr/Ass1/printElement.c
+	"mxutil.h"
+	<string.h>
+
